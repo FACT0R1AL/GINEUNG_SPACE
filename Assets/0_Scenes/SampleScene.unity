@@ -248,7 +248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceShipMove
   pathObj: {fileID: 2089036187}
-  moveSpeed: 0.1
+  moveSpeed: 1
 --- !u!1 &112862044
 GameObject:
   m_ObjectHideFlags: 0
@@ -1577,6 +1577,7 @@ MonoBehaviour:
   currentVelocity: {x: 0, y: 0, z: 0}
   maxVelocity: 5
   moveSpeed: 2
+  maxDistance: 250
 --- !u!54 &715316393
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2518,7 +2519,7 @@ Transform:
   m_GameObject: {fileID: 1275784524}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 212.2, y: 7, z: -53.4}
+  m_LocalPosition: {x: 700, y: 70, z: -800}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2624,7 +2625,7 @@ Transform:
   m_GameObject: {fileID: 1653563410}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 125.9, y: -14.8, z: 155.1}
+  m_LocalPosition: {x: 1600, y: 35, z: 400}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2811,7 +2812,7 @@ Transform:
   m_GameObject: {fileID: 1715605033}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 110, y: -10, z: -9.2}
+  m_LocalPosition: {x: 400, y: 0, z: -400}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []

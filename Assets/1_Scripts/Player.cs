@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
 	public float maxVelocity = 10f;
 	public float moveSpeed = 5f;
 
+	public float maxDistance = 250;
+
 	private Camera mainCamera;
 	private GameObject Spaceship;
 
@@ -44,7 +46,7 @@ public class Player : MonoBehaviour
 		float distance = Vector3.Distance(transform.position, Spaceship.transform.position);
 		Debug.Log(distance);
 
-		if (distance > 50)
+		if (distance > maxDistance)
 		{ 
 			transform.position = Spaceship.transform.position + new Vector3 (0f, 5f, 0f);
 			currentVelocity = Vector3.zero;

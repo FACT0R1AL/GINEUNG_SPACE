@@ -61,5 +61,17 @@ public class Player : MonoBehaviour
 
 		lineRenderer.SetPosition(0, transform.position);
 		lineRenderer.SetPosition(1, Spaceship.transform.position);
+
+		Ray ray = new Ray(transform.position, transform.forward * 5f);
+		RaycastHit hit;
+
+		if (Physics.Raycast(ray, out hit, 5f, LayerMask.GetMask("Resources"))) {
+			ShowResourceUI(hit);
+		}
+	}
+
+	void ShowResourceUI(RaycastHit hit)
+	{
+
 	}
 }

@@ -11,14 +11,19 @@ public class Player : MonoBehaviour
 	private Camera mainCamera;
 	private GameObject Spaceship;
 
+	private LineRenderer lineRenderer;
+
 	private void Start()
 	{
 		mainCamera = Camera.main;
 		Spaceship = GameObject.FindGameObjectWithTag("Spaceship");
+
+		lineRenderer = GetComponent<LineRenderer>();
 	}
 
 	private void Update()
 	{
+		// 이동
 		float h = Input.GetAxis("Horizontal");
 		float v = Input.GetAxis("Vertical");
 
@@ -43,6 +48,8 @@ public class Player : MonoBehaviour
 
 		transform.Translate(currentVelocity * Time.deltaTime, Space.World);
 
+
+		// 최대 거리 (=산소 케이블)
 		float distance = Vector3.Distance(transform.position, Spaceship.transform.position);
 		Debug.Log(distance);
 
@@ -51,5 +58,8 @@ public class Player : MonoBehaviour
 			transform.position = Spaceship.transform.position + new Vector3 (0f, 5f, 0f);
 			currentVelocity = Vector3.zero;
 		}
+
+		lineRenderer.SetPosition(0, transform.position);
+		lineRenderer.SetPosition(1, Spaceship.transform.position);
 	}
 }

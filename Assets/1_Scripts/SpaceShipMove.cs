@@ -8,7 +8,6 @@ public class SpaceShipMove : MonoBehaviour
 
 	private LineRenderer lineRenderer;
 	private Vector3[] pathPos;
-
 	private int index;
 
 	private void Start()

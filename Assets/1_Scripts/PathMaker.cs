@@ -9,6 +9,9 @@ public class PathMaker : MonoBehaviour
 	public int segmentCount = 20;  // 곡선을 얼마나 부드럽게 할 것인가 (점의 개수)
 	public Vector3[] pathPos;
 
+	public float pathLength;
+	public float displayLength;
+
 	private LineRenderer lineRenderer;
 
 	private void Start()
@@ -32,6 +35,11 @@ public class PathMaker : MonoBehaviour
 			Vector3 position = CalculateBezierPoint(t, startPoint.position, controlPoint.position, endPoint.position);
 			lineRenderer.SetPosition(i, position);
 			pathPos[i] = position;
+
+			if (i > 0)
+			{
+				pathLength += (pathPos[i] - pathPos[i - 1]).magnitude;
+			}
 		}
 	}
 

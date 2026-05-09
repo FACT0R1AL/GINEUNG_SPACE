@@ -2,14 +2,19 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+	[Header("Move")]
 	public Vector3 currentVelocity;
 	public float maxVelocity = 10f;
 	public float moveSpeed = 5f;
-
 	public float maxDistance = 250;
+
+	[Header("Get")]
+	public float maxGetDistance;
 
 	private Camera mainCamera;
 	private GameObject Spaceship;
+
+	private GameObject currentResource;
 
 	private LineRenderer lineRenderer;
 
@@ -62,16 +67,27 @@ public class Player : MonoBehaviour
 		lineRenderer.SetPosition(0, transform.position);
 		lineRenderer.SetPosition(1, Spaceship.transform.position);
 
-		Ray ray = new Ray(transform.position, transform.forward * 5f);
+		Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
 		RaycastHit hit;
 
-		if (Physics.Raycast(ray, out hit, 5f, LayerMask.GetMask("Resources"))) {
-			ShowResourceUI(hit);
+		if (Physics.Raycast(ray, out hit, maxGetDistance, LayerMask.GetMask("Resource")))
+		{
+			if (currentResource != hit.collider.gameObject)
+			{
+				if (currentResource != null)
+					currentResource.transform.GetChild(0).gameObject.SetActive(false);
+
+				currentResource = hit.collider.gameObject;
+				currentResource.transform.GetChild(0).gameObject.SetActive(true);
+			}
 		}
-	}
-
-	void ShowResourceUI(RaycastHit hit)
-	{
-
+		else
+		{
+			if (currentResource != null)
+			{
+				currentResource.transform.GetChild(0).gameObject.SetActive(false);
+				currentResource = null;
+			}
+		}
 	}
 }

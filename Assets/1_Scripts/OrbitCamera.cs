@@ -13,6 +13,8 @@ public class OrbitCamera : MonoBehaviour
 	public float distanceMin = 2f; // 최소 줌 거리
 	public float distanceMax = 15f;// 최대 줌 거리
 
+	public Vector3 deltaVector;
+
 	float x = 0.0f;
 	float y = 0.0f;
 
@@ -22,11 +24,7 @@ public class OrbitCamera : MonoBehaviour
 		x = angles.y;
 		y = angles.x;
 
-		// 시작 시 타겟이 있다면 위치 초기화
-		if (target != null)
-		{
-			UpdateCamera();
-		}
+		UpdateCamera();
 	}
 
 	void LateUpdate()
@@ -53,7 +51,7 @@ public class OrbitCamera : MonoBehaviour
 	{
 		Quaternion rotation = Quaternion.Euler(y, x, 0);
 		Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
-		Vector3 position = rotation * negDistance + target.position;
+		Vector3 position = rotation * negDistance + target.position + deltaVector;
 
 		transform.rotation = rotation;
 		transform.position = position;

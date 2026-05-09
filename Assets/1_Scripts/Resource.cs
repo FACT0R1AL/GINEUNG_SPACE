@@ -1,7 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Resource", menuName = "Resource")]
-public class Resource : ScriptableObject
+public class Resource : MonoBehaviour
 {
     public string ResourceName;
     public string ResourceDescription;

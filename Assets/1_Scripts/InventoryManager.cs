@@ -22,6 +22,8 @@ public struct InventoryItem
     public int count;
     public Sprite icon;
     public Color color;
+    [TextArea]
+    public string itemInfo;
 }
 
 
@@ -43,6 +45,32 @@ public class InventoryManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            foreach (var type in ItemType.GetValues(typeof(ItemType)))
+            {
+                AddItem((ItemType)type, 1);
+            }
+            Debug.Log("아이템다 추가됨");
+        }
+    }
+
+    public void AddItem(ItemType itemType, int count)
+    {
+        for (int i = 0; i < inventoryItems.Count; i++)
+        {
+            if (inventoryItems[i].itemType == itemType)
+            {
+                var item = inventoryItems[i];
+                item.count += count;
+                inventoryItems[i] = item;
+                return;
+            }
         }
     }
 
@@ -82,5 +110,17 @@ public class InventoryManager : MonoBehaviour
             }
         }
         return Color.red;
+    }
+
+    public string GetItemInfo(ItemType itemType)
+    {
+        foreach (InventoryItem item in inventoryItems)
+        {
+            if (item.itemType == itemType)
+            {
+                return item.itemInfo;
+            }
+        }
+        return "아이템 정보 없음";
     }
 }

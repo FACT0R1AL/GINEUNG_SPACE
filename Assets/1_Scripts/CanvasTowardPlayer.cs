@@ -15,6 +15,6 @@ public class CanvasTowardPlayer : MonoBehaviour
 		worldCanvas.transform.LookAt(player.transform.position);
 
 		Vector3 rot = worldCanvas.transform.eulerAngles;
-		worldCanvas.transform.rotation = Quaternion.Euler(rot.x, rot.y + 180f, rot.z + 180f);
+		worldCanvas.transform.rotation = Quaternion.Euler(rot.x, rot.y + 180f, rot.z);
 	}
 }

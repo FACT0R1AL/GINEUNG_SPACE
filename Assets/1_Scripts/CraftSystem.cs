@@ -9,27 +9,37 @@ public class CraftSystem : MonoBehaviour
     public Image resultImage2;
     public Text ingredientsCountText;
     public Text resultCountText;
-    public Text itemInfoText;
+    public Text currentItemInfoText;
+    public Text upgradeItemInfoText;
     public Button craftButton;
     public GameObject itemCraftParticle;
 
-    private ItemType currentItemType;
+    [SerializeField] private ItemType currentItemType;
 
     private void Awake()
     {
         craftButton.onClick.AddListener(OnCraftButtonClick);
     }
 
-    private void Update()
+	private void Start()
+	{
+		int index = (int)currentItemType;
+		ItemType upgradeItemType = (ItemType)(index + 1);
+		setItem(currentItemType, upgradeItemType);
+	}
+
+	private void Update()
     {
-        if (currentItemType != null)
-        {
-            int index = (int)currentItemType;
-            ItemType upgradeItemType = (ItemType)(index + 1);
-            ingredientsCountText.text = InventoryManager.Instance.GetItemCount(currentItemType).ToString();
-            resultCountText.text = InventoryManager.Instance.GetItemCount(upgradeItemType).ToString();
-            itemInfoText.text = $"아이템 정보\n" + $"{InventoryManager.Instance.GetItemInfo(currentItemType)}" + "\n\n업그레이드 정보\n" + $"{InventoryManager.Instance.GetItemInfo(upgradeItemType)}";
-        }
+		int index = (int)currentItemType;
+		ItemType upgradeItemType = (ItemType)(index + 1);
+		ingredientsCountText.text = InventoryManager.Instance.GetItemCount(currentItemType).ToString();
+		resultCountText.text = InventoryManager.Instance.GetItemCount(upgradeItemType).ToString();
+        currentItemInfoText.text =
+            $"현재 아이템 정보\n\n" +
+            $"{InventoryManager.Instance.GetItemInfo(currentItemType)}";
+        upgradeItemInfoText.text =
+            "업그레이드 아이템 정보\n\n" + 
+            $"{InventoryManager.Instance.GetItemInfo(upgradeItemType)}";
     }
 
     private void OnCraftButtonClick()
@@ -40,9 +50,11 @@ public class CraftSystem : MonoBehaviour
         int count = InventoryManager.Instance.GetItemCount(currentItemType);
         if (count >= 2)
         {
-            int index = (int)currentItemType;
+			count -= 2;
+
+			int index = (int)currentItemType;
             ItemType upgradeItemType = (ItemType)(index + 1);
-            count -= 2;
+
             for (int i = 0; i < InventoryManager.Instance.inventoryItems.Count; i++)
             {
                 if (InventoryManager.Instance.inventoryItems[i].itemType == currentItemType)
@@ -58,6 +70,7 @@ public class CraftSystem : MonoBehaviour
                     InventoryManager.Instance.inventoryItems[i] = item;
                 }
             }
+
             var particle = Instantiate(itemCraftParticle, transform);
             var itemShowParticleUI = particle.GetComponent<ItemShowParticleUI>();
             itemShowParticleUI.ShowItem(new InventoryItem
@@ -70,14 +83,17 @@ public class CraftSystem : MonoBehaviour
         }
     }
 
-    public void setItem(ItemType itemType, ItemType upgradeItemType)
+    public void SetItem(ItemType itemType, ItemType upgradeItemType)
     {
         ingredientsImage.color = InventoryManager.Instance.GetItemColor(itemType);
         resultImage.color = InventoryManager.Instance.GetItemColor(upgradeItemType);
+
         ingredientsImage2.sprite = InventoryManager.Instance.GetItemIcon(itemType);
         resultImage2.sprite = InventoryManager.Instance.GetItemIcon(upgradeItemType);
+
         ingredientsCountText.text = InventoryManager.Instance.GetItemCount(itemType).ToString();
         resultCountText.text = InventoryManager.Instance.GetItemCount(upgradeItemType).ToString();
-            currentItemType = itemType;
+        
+        currentItemType = itemType;
     }
 }

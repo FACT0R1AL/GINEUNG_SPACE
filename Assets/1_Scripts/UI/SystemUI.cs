@@ -6,10 +6,10 @@ public class SystemUI : MonoBehaviour
     public Text nameAndLevelText;
     public Text currentDesc;
     public Text upgradeDesc;
-    public Text upgradeItesDesc;
+    public Text upgradeItemsDesc;
     public Text upgradeButtonText;
 
-    public Image[] starts = new Image[3];
+    public Image[] stars = new Image[3];
 
     public Button upgradeButton;
 
@@ -18,17 +18,17 @@ public class SystemUI : MonoBehaviour
         upgradeButton.onClick.AddListener(Upgrade);
     }
 
-
-    public void OnEnable()
+    public void Start()
     {
         Set();
     }
+
     public void Upgrade()
     {
         bool canUpgrade = true;
-        foreach (var dd in SystemManager.Instance.engineSystem.upgradeInfos[SystemManager.Instance.engineSystem.currentLevel].upgradeData.itemDatas)
+        foreach (var itemData in SystemManager.Instance.engineSystem.upgradeInfos[SystemManager.Instance.engineSystem.currentLevel].upgradeData.itemDatas)
         {
-            int count = InventoryManager.Instance.GetItemCount(dd.itemType);
+            int count = InventoryManager.Instance.GetItemCount(itemData.itemType);
             if (count <= 0)
             {
                 canUpgrade = false;
@@ -36,7 +36,7 @@ public class SystemUI : MonoBehaviour
             }
             else
             {
-                if (count < dd.count)
+                if (count < itemData.count)
                 {
                     canUpgrade = false;
                     break;
@@ -46,14 +46,14 @@ public class SystemUI : MonoBehaviour
         if (canUpgrade)
         {
 
-            foreach (var dd in SystemManager.Instance.engineSystem.upgradeInfos[SystemManager.Instance.engineSystem.currentLevel].upgradeData.itemDatas)
+            foreach (var itemData in SystemManager.Instance.engineSystem.upgradeInfos[SystemManager.Instance.engineSystem.currentLevel].upgradeData.itemDatas)
             {
                 for (int i = 0; i < InventoryManager.Instance.inventoryItems.Count; i++)
                 {
-                    if (InventoryManager.Instance.inventoryItems[i].itemType == dd.itemType)
+                    if (InventoryManager.Instance.inventoryItems[i].itemType == itemData.itemType)
                     {
                         var item = InventoryManager.Instance.inventoryItems[i];
-                        item.count -= dd.count;
+                        item.count -= itemData.count;
                         InventoryManager.Instance.inventoryItems[i] = item;
                     }
                 }
@@ -66,15 +66,16 @@ public class SystemUI : MonoBehaviour
     public void Set()
     {
         nameAndLevelText.text = $"엔진 Lv.{SystemManager.Instance.engineSystem.currentLevel}";
-        currentDesc.text = $"효과: {SystemManager.Instance.engineSystem.upgradeInfos[SystemManager.Instance.engineSystem.currentLevel - 1].upgradeDesc}";
+        currentDesc.text = $"{SystemManager.Instance.engineSystem.upgradeInfos[SystemManager.Instance.engineSystem.currentLevel - 1].upgradeDesc}";
+
         if (SystemManager.Instance.engineSystem.currentLevel != 3)
         {
-            upgradeDesc.text = $"효과: {SystemManager.Instance.engineSystem.upgradeInfos[SystemManager.Instance.engineSystem.currentLevel].upgradeDesc}";
-            upgradeItesDesc.text = "업그레이드 재료: ";
-            foreach (var dd in SystemManager.Instance.engineSystem.upgradeInfos[SystemManager.Instance.engineSystem.currentLevel].upgradeData.itemDatas)
+            upgradeDesc.text = $"{SystemManager.Instance.engineSystem.upgradeInfos[SystemManager.Instance.engineSystem.currentLevel].upgradeDesc}";
+            upgradeItemsDesc.text = "";
+            foreach (var itemData in SystemManager.Instance.engineSystem.upgradeInfos[SystemManager.Instance.engineSystem.currentLevel].upgradeData.itemDatas)
             {
                 string itemName = "";
-                switch (dd.itemType)
+                switch (itemData.itemType)
                 {
                     case ItemType.IronLv1:
                         itemName = "철 Lv.1";
@@ -104,26 +105,26 @@ public class SystemUI : MonoBehaviour
                         itemName = "플라스틱 Lv.3";
                         break;
                 }
-                upgradeItesDesc.text += $"{itemName} {dd.count}개 ";
+                upgradeItemsDesc.text += $"{itemName} ({itemData.count})\n";
             }
             upgradeButton.interactable = true;
             upgradeButtonText.text = "업그레이드";
         }
         else
         {
-            upgradeItesDesc.text = "최대 레벨입니다.";
-            upgradeDesc.text = "최대 레벨입니다.";
+            upgradeItemsDesc.text = "";
+            upgradeDesc.text = "최대 레벨입니다";
             upgradeButton.interactable = false;
             upgradeButtonText.text = "최대 레벨";
         }
 
-        for (int i = 0; i < starts.Length; i++)
+        for (int i = 0; i < stars.Length; i++)
         {
-            starts[i].gameObject.SetActive(false);
+            stars[i].gameObject.SetActive(false);
         }
         for (int i = 0; i < SystemManager.Instance.engineSystem.currentLevel; i++)
         {
-            starts[i].gameObject.SetActive(true);
+            stars[i].gameObject.SetActive(true);
         }
     }
 }

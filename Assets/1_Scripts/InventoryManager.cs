@@ -78,7 +78,6 @@ public class InventoryManager : MonoBehaviour
 
     public int GetItemCount(ItemType itemType)
     {
-
         foreach (InventoryItem item in inventoryItems)
         {
             if (item.itemType == itemType)

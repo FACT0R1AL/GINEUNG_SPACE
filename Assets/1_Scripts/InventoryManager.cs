@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -52,9 +53,9 @@ public class InventoryManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            foreach (var type in ItemType.GetValues(typeof(ItemType)))
+            foreach (ItemType type in Enum.GetValues(typeof(ItemType)))
             {
-                AddItem((ItemType)type, 1);
+                AddItem(type, 1);
             }
             Debug.Log("아이템다 추가됨");
         }

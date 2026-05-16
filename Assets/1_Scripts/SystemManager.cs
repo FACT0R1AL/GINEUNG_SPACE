@@ -5,7 +5,7 @@ using UnityEngine;
 public struct SystemData
 {
     public int currentLevel;
-    public int MaxLeve;
+    public int MaxLevel;
     public List<UpgradeInfo> upgradeInfos;
 }
 
@@ -14,7 +14,7 @@ public struct UpgradeInfo
 {
     public int currentLevel;
     [TextArea]
-    public string upgradedesc;
+    public string upgradeDesc;
     public UpgradeData upgradeData;
 }
 

@@ -1184,9 +1184,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 881209230}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 191.07954, y: -25}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &127469221
@@ -3409,9 +3409,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 881209230}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 274.11932, y: -25}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &335683312
@@ -5175,9 +5175,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 881209230}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 108.03977, y: -25}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &495480239
@@ -8247,7 +8247,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &747574733
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9291,9 +9291,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 881209230}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 25, y: -25}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &821535253
@@ -21192,14 +21192,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SystemManager
   engineSystem:
     currentLevel: 1
-    MaxLeve: 3
+    MaxLevel: 3
     upgradeInfos:
     - currentLevel: 1
-      upgradedesc: "\uC6B0\uC8FC\uC120\uC758 \uAE30\uBCF8\uC18D\uB3C4 100 "
+      upgradeDesc: 
       upgradeData:
         itemDatas: []
     - currentLevel: 2
-      upgradedesc: "\uC6B0\uC8FC\uC120\uC758 \uAE30\uBCF8\uC18D\uB3C4 120"
+      upgradeDesc: 
       upgradeData:
         itemDatas:
         - itemType: 1
@@ -21207,7 +21207,7 @@ MonoBehaviour:
         - itemType: 4
           count: 2
     - currentLevel: 3
-      upgradedesc: "\uC6B0\uC8FC\uC120\uC758 \uAE30\uBCF8\uC18D\uB3C4 150"
+      upgradeDesc: 
       upgradeData:
         itemDatas:
         - itemType: 2

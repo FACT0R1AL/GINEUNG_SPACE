@@ -66,10 +66,10 @@ public class SystemUI : MonoBehaviour
     public void Set()
     {
         nameAndLevelText.text = $"엔진 Lv.{SystemManager.Instance.engineSystem.currentLevel}";
-        currentDesc.text = $"효과: {SystemManager.Instance.engineSystem.upgradeInfos[SystemManager.Instance.engineSystem.currentLevel - 1].upgradedesc}";
+        currentDesc.text = $"효과: {SystemManager.Instance.engineSystem.upgradeInfos[SystemManager.Instance.engineSystem.currentLevel - 1].upgradeDesc}";
         if (SystemManager.Instance.engineSystem.currentLevel != 3)
         {
-            upgradeDesc.text = $"효과: {SystemManager.Instance.engineSystem.upgradeInfos[SystemManager.Instance.engineSystem.currentLevel].upgradedesc}";
+            upgradeDesc.text = $"효과: {SystemManager.Instance.engineSystem.upgradeInfos[SystemManager.Instance.engineSystem.currentLevel].upgradeDesc}";
             upgradeItesDesc.text = "업그레이드 재료: ";
             foreach (var dd in SystemManager.Instance.engineSystem.upgradeInfos[SystemManager.Instance.engineSystem.currentLevel].upgradeData.itemDatas)
             {

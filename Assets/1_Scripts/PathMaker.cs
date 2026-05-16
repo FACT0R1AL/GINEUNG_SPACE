@@ -12,6 +12,8 @@ public class PathMaker : MonoBehaviour
 	public float pathLength;
 	public float displayLength;
 
+	public GameObject minimapCircle;
+
 	private LineRenderer lineRenderer;
 
 	private void Start()
@@ -19,10 +21,7 @@ public class PathMaker : MonoBehaviour
 		lineRenderer = GetComponent<LineRenderer>();
 		lineRenderer.positionCount = segmentCount + 1;
 		pathPos = new Vector3[lineRenderer.positionCount];
-	}
 
-	void Update()
-	{
 		DrawBezierCurve();
 	}
 
@@ -35,6 +34,8 @@ public class PathMaker : MonoBehaviour
 			Vector3 position = CalculateBezierPoint(t, startPoint.position, controlPoint.position, endPoint.position);
 			lineRenderer.SetPosition(i, position);
 			pathPos[i] = position;
+
+			Instantiate(minimapCircle, position, Quaternion.Euler(90f, 0f, 0f));
 
 			if (i > 0)
 			{

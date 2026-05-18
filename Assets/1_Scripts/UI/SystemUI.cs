@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class SystemUI : MonoBehaviour
 {
+    public int systemIndex;
     public Text nameAndLevelText;
     public Text currentDesc;
     public Text upgradeDesc;
@@ -26,7 +27,7 @@ public class SystemUI : MonoBehaviour
     public void Upgrade()
     {
         bool canUpgrade = true;
-        foreach (var itemData in SystemManager.Instance.engineSystem.upgradeInfos[SystemManager.Instance.engineSystem.currentLevel].upgradeData.itemDatas)
+        foreach (var itemData in SystemManager.Instance.systems[systemIndex].upgradeInfos[SystemManager.Instance.systems[systemIndex].currentLevel].upgradeData.itemDatas)
         {
             int count = InventoryManager.Instance.GetItemCount(itemData.itemType);
             if (count <= 0)
@@ -46,7 +47,7 @@ public class SystemUI : MonoBehaviour
         if (canUpgrade)
         {
 
-            foreach (var itemData in SystemManager.Instance.engineSystem.upgradeInfos[SystemManager.Instance.engineSystem.currentLevel].upgradeData.itemDatas)
+            foreach (var itemData in SystemManager.Instance.systems[systemIndex].upgradeInfos[SystemManager.Instance.systems[systemIndex].currentLevel].upgradeData.itemDatas)
             {
                 for (int i = 0; i < InventoryManager.Instance.inventoryItems.Count; i++)
                 {
@@ -58,21 +59,25 @@ public class SystemUI : MonoBehaviour
                     }
                 }
             }
-            SystemManager.Instance.engineSystem.currentLevel++;
+            SystemManager.Instance.systems[systemIndex].currentLevel++;
             Set();
         }
     }
 
     public void Set()
     {
-        nameAndLevelText.text = $"엔진 Lv.{SystemManager.Instance.engineSystem.currentLevel}";
-        currentDesc.text = $"{SystemManager.Instance.engineSystem.upgradeInfos[SystemManager.Instance.engineSystem.currentLevel - 1].upgradeDesc}";
-
-        if (SystemManager.Instance.engineSystem.currentLevel != 3)
+        nameAndLevelText.text = $"{SystemManager.Instance.systems[systemIndex].systemName} Lv.{SystemManager.Instance.systems[systemIndex].currentLevel}";
+        currentDesc.text = $"{SystemManager.Instance.systems[systemIndex].upgradeInfos[SystemManager.Instance.systems[systemIndex].currentLevel - 1].upgradeDesc}";
+        int max = 3;
+        if (SystemManager.Instance.systems[systemIndex].systemName == "채집로봇")
         {
-            upgradeDesc.text = $"{SystemManager.Instance.engineSystem.upgradeInfos[SystemManager.Instance.engineSystem.currentLevel].upgradeDesc}";
+            max = 4;
+        }
+        if (SystemManager.Instance.systems[systemIndex].currentLevel != max)
+        {
+            upgradeDesc.text = $"{SystemManager.Instance.systems[systemIndex].upgradeInfos[SystemManager.Instance.systems[systemIndex].currentLevel].upgradeDesc}";
             upgradeItemsDesc.text = "";
-            foreach (var itemData in SystemManager.Instance.engineSystem.upgradeInfos[SystemManager.Instance.engineSystem.currentLevel].upgradeData.itemDatas)
+            foreach (var itemData in SystemManager.Instance.systems[systemIndex].upgradeInfos[SystemManager.Instance.systems[systemIndex].currentLevel].upgradeData.itemDatas)
             {
                 string itemName = "";
                 switch (itemData.itemType)
@@ -122,7 +127,7 @@ public class SystemUI : MonoBehaviour
         {
             stars[i].gameObject.SetActive(false);
         }
-        for (int i = 0; i < SystemManager.Instance.engineSystem.currentLevel; i++)
+        for (int i = 0; i < SystemManager.Instance.systems[systemIndex].currentLevel; i++)
         {
             stars[i].gameObject.SetActive(true);
         }

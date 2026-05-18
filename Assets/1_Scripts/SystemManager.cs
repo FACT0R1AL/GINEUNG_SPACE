@@ -4,6 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public struct SystemData
 {
+    public string systemName;
     public int currentLevel;
     public int MaxLevel;
     public List<UpgradeInfo> upgradeInfos;
@@ -35,7 +36,7 @@ public class SystemManager : MonoBehaviour
 {
     public static SystemManager Instance { get; private set; }
 
-    public SystemData engineSystem;
+    public SystemData[] systems;
 
     private void Awake()
     {

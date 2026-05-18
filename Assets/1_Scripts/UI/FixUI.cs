@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,53 +7,69 @@ public class FixUI : MonoBehaviour
 {
     [Header("필수 요소")]
     public Slider _Slider;
+    public Button _goStopButton;
 
-    // 범위 상자
     private RectTransform _rectRangeBox;
     private RectTransform _rectSlider;
 
-    public bool _IsSuccessful = false;
+    private bool _IsSuccessful = false;
     private bool _IsMove = false;
 
-    // LeanTween 대체용 변수들
-    [Header("설정")]
-    public float speed = 100f; // 슬라이더가 움직이는 속도
-    private bool _movingUp = true; // 현재 슬라이더 값이 증가 중인지 여부
+    [Header("슬라이더 구동 설정")]
+    public float speed = 100f; // 슬라이더 왕복 속도
+    private bool _movingUp = true;
+
+    [Header("★ 범위 상자 크기 조절 (0~100 기준 퍼센트)")]
+    [Range(1f, 100f)] public float minSizePercent = 15f; // 인스펙터에서 조절할 최소 크기
+    [Range(1f, 100f)] public float maxSizePercent = 30f; // 인스펙터에서 조절할 최대 크기
+
+    // 내부에서 사용할 성공 범위 저장 변수 (0 ~ 100 기준)
+    private float _rangeMin = 0f;
+    private float _rangeMax = 0f;
+
+    public FixType fixType;
 
     private void Awake()
     {
-        // 삼항 연산자 대신 안전하게 null 체크 후 할당
         if (_rectRangeBox == null)
         {
             _rectRangeBox = _Slider.transform.GetChild(1).GetComponent<RectTransform>();
         }
         _rectRangeBox.gameObject.SetActive(false);
-
         _rectSlider = _Slider.GetComponent<RectTransform>();
 
-        // 슬라이더의 기본 최소/최대값 강제 지정 (안전장치)
+        // UI 정렬 강제 초기화 (왼쪽 정렬, 왼쪽 피벗)
+        _rectRangeBox.anchorMin = new Vector2(0f, 0.5f);
+        _rectRangeBox.anchorMax = new Vector2(0f, 0.5f);
+        _rectRangeBox.pivot = new Vector2(0f, 0.5f);
+
+        _goStopButton.interactable = false;
+
         _Slider.minValue = 0f;
         _Slider.maxValue = 100f;
+
+        gameObject.SetActive(false);
     }
 
-    public void Start()
+    public void Show(FixType fixType)
     {
+        gameObject.SetActive(true);
         OnStartSC();
+        this.fixType = fixType;
     }
 
     private void Update()
     {
-        // 게임이 시작되었고, 움직여야 하는 상태일 때만 실행
         if (!_IsMove) return;
 
-        // LeanTween.setLoopPingPong()을 대체하는 핑퐁 로직
+        // 슬라이더 바 구동 (0 ~ 100 무한 왕복)
         if (_movingUp)
         {
             _Slider.value += speed * Time.deltaTime;
             if (_Slider.value >= _Slider.maxValue)
             {
                 _Slider.value = _Slider.maxValue;
-                _movingUp = false; // 감소 방향으로 전환
+                _movingUp = false;
             }
         }
         else
@@ -61,28 +78,46 @@ public class FixUI : MonoBehaviour
             if (_Slider.value <= _Slider.minValue)
             {
                 _Slider.value = _Slider.minValue;
-                _movingUp = true; // 증가 방향으로 전환
+                _movingUp = true;
             }
         }
     }
 
     public void OnStartSC()
     {
-
-        float fotRangeValue = Random.Range(5f, 85f); // 끝에 걸치지 않게 최대 범위를 조금 줄임
-        float fotSize = Random.Range(20f, 100f);
-
-        // 범위 상자 활성화
-        _rectRangeBox.gameObject.SetActive(true);
-
-        // 1. 범위 상자의 위치 설정 (슬라이더 가로 길이 기준 비율 계산)
-        float sliderWidth = _rectSlider.rect.width;
-        _rectRangeBox.anchoredPosition = new Vector2(sliderWidth * (fotRangeValue / 100f), 0);
-        _rectRangeBox.sizeDelta = new Vector2(fotSize, _rectRangeBox.sizeDelta.y);
-
-        // 2. 값 초기화 및 움직임 시작
+        _goStopButton.interactable = true;
         _Slider.value = 0f;
         _movingUp = true;
+
+        // 예외 방지: 만약 최솟값이 최댓값보다 크게 설정되어 있다면 자동으로 보정
+        if (minSizePercent > maxSizePercent)
+        {
+            float temp = minSizePercent;
+            minSizePercent = maxSizePercent;
+            maxSizePercent = temp;
+        }
+
+        // 전체 슬라이더의 실제 픽셀 가로 크기
+        float sliderWidth = _rectSlider.rect.width;
+
+        // 1. 인스펙터에서 설정한 최소/최대 범위 사이에서 랜덤하게 크기를 결정합니다.
+        float sizePercent = Random.Range(minSizePercent, maxSizePercent);
+
+        // 2. 최대 100을 넘지 않도록, 배치 가능한 최대 시작점을 제한 (100 - 상자크기)
+        float maxStartPercent = 100f - sizePercent;
+
+        // 3. 안전한 범위 내에서 시작 퍼센트 결정 (절대 우측 이탈 불가)
+        _rangeMin = Random.Range(0f, maxStartPercent);
+        _rangeMax = _rangeMin + sizePercent;
+
+        // 4. 결정된 0~100 기준 값을 실제 UI 픽셀 크기로 변환하여 적용
+        float pixelPositionX = sliderWidth * (_rangeMin / 100f);
+        float pixelWidth = sliderWidth * (sizePercent / 100f);
+
+        _rectRangeBox.anchoredPosition = new Vector2(pixelPositionX, 0f);
+        _rectRangeBox.sizeDelta = new Vector2(pixelWidth, _rectRangeBox.sizeDelta.y);
+
+        _rectRangeBox.gameObject.SetActive(true);
         _IsMove = true;
     }
 
@@ -90,26 +125,29 @@ public class FixUI : MonoBehaviour
     {
         if (!_IsMove) return;
 
-        _IsMove = false; // Update문 중지
+        _IsMove = false;
 
-        // 훨씬 직관적이고 정확한 성공 여부 판단 (값 자체로 비교)
-        _IsSuccessful = IsValueInRange();
+        // 현재 슬라이더 값이 미니멈과 맥시멈 사이에 있는가?
+        _IsSuccessful = (_Slider.value >= _rangeMin) && (_Slider.value <= _rangeMax);
 
+        if (_IsSuccessful)
+        {
+            Debug.Log($"<color=green>[미니게임 성공]</color> 멈춘 위치: {_Slider.value:F2} (정답 범위: {_rangeMin:F2} ~ {_rangeMax:F2})");
+            FixManager.Instance.Fix(fixType);
+            StartCoroutine(Hide());
+        }
+        else
+        {
+            Debug.Log($"<color=red>[미니게임 실패]</color> 멈춘 위치: {_Slider.value:F2} (정답 범위: {_rangeMin:F2} ~ {_rangeMax:F2})");
+            StartCoroutine(Hide());
+        }
+
+        _goStopButton.interactable = false;
     }
 
-    private bool IsValueInRange()
+    IEnumerator Hide()
     {
-        // 슬라이더의 전체 가로 길이
-        float sliderWidth = _rectSlider.rect.width;
-        if (sliderWidth <= 0) return false;
-
-        // 범위 상자의 시작과 끝 위치가 전체 길이에서 차지하는 '비율(0~100%)' 계산
-        float boxMinPercent = (_rectRangeBox.anchoredPosition.x / sliderWidth) * 100f;
-        float boxMaxPercent = ((_rectRangeBox.anchoredPosition.x + _rectRangeBox.sizeDelta.x) / sliderWidth) * 100f;
-
-        // 현재 슬라이더의 value가 그 비율(범위) 안에 들어와 있는지 검사
-        // (+-2 정도의 약간의 판정 보정값(보너스 범위)을 주었습니다)
-        float currentVal = _Slider.value;
-        return (currentVal >= boxMinPercent - 2f) && (currentVal <= boxMaxPercent + 2f);
+        yield return new WaitForSeconds(1f); // 1초 대기 후 숨김
+        gameObject.SetActive(false);
     }
 }

@@ -12,6 +12,8 @@ public enum FixType
 
 public class FixManager : MonoBehaviour
 {
+    public static FixManager Instance;
+
     public bool brokenEngine;
     public bool brokenWall;
     public bool brokenOxygen;
@@ -26,6 +28,41 @@ public class FixManager : MonoBehaviour
     public Image droneImage;
 
     public FixType fix;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void Fix(FixType fix)
+    {
+        switch (fix)
+        {
+            case FixType.Engine:
+                brokenEngine = false;
+                engineImage.color = fixColor;
+                break;
+            case FixType.Wall:
+                brokenWall = false;
+                wallImage.color = fixColor;
+                break;
+            case FixType.Oxygen:
+                brokenOxygen = false;
+                oxygenImage.color = fixColor;
+                break;
+            case FixType.Drone:
+                brokenDrone = false;
+                droneImage.color = fixColor;
+                break;
+        }
+    }
 
 
     public void broken(FixType fix)

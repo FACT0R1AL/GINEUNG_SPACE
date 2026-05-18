@@ -153,7 +153,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 425}
+  m_AnchoredPosition: {x: 0, y: 274}
   m_SizeDelta: {x: 1000, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &25098747
@@ -404,7 +404,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceShipMove
   pathObj: {fileID: 2089036187}
-  moveSpeed: 0.3
+  currentMoveSpeed: 3
+  maxMoveSpeed: 3
 --- !u!1 &78673303
 GameObject:
   m_ObjectHideFlags: 0
@@ -693,7 +694,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 200, z: 0}
-  m_LocalScale: {x: 12, y: 20, z: 20}
+  m_LocalScale: {x: 20, y: 30, z: 30}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 854796888}
@@ -11980,7 +11981,7 @@ GameObject:
   - component: {fileID: 566051452}
   - component: {fileID: 566051451}
   m_Layer: 5
-  m_Name: LeftDistanceText
+  m_Name: RemainingDistanceText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12550,6 +12551,8 @@ MonoBehaviour:
   moveSpeed: 2
   maxDistance: 250
   maxGetDistance: 15
+  currentOxygen: 0
+  maxOxygen: 150
 --- !u!54 &715316393
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -12879,7 +12882,7 @@ Camera:
   far clip plane: 10000
   field of view: 60
   orthographic: 1
-  orthographic size: 250
+  orthographic size: 350
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -13142,7 +13145,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -10, y: 200, z: 0}
-  m_LocalScale: {x: 12, y: 20, z: 20}
+  m_LocalScale: {x: 20, y: 30, z: 30}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 854796888}
@@ -13449,6 +13452,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886002312}
   m_CullTransparentMesh: 1
+--- !u!1 &962300504
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 962300505}
+  - component: {fileID: 962300506}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &962300505
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962300504}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &962300506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962300504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 212d917ded6213b4d94e0bee4918495a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIManager
+  spaceshipVelocityText: {fileID: 1527934448}
+  spaceshipVelocityImage: {fileID: 377068803}
+  oxygenTankText: {fileID: 1316734809}
+  oxygenTankImage: {fileID: 46576968}
+  remainingDistanceText: {fileID: 566051451}
 --- !u!1 &967415795
 GameObject:
   m_ObjectHideFlags: 0
@@ -21017,7 +21069,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 400, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100.00008, z: 100.00008}
+  m_LocalScale: {x: 200, y: 200, z: 200}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 978313415}
@@ -36201,7 +36253,6 @@ MonoBehaviour:
   segmentCount: 500
   pathPos: []
   pathLength: 0
-  displayLength: 0
   minimapCircle: {fileID: 5785844136772834796, guid: 4bd7f91f5590a7641b456e815050a5be, type: 3}
 --- !u!1 &2127255672
 GameObject:
@@ -36375,3 +36426,4 @@ SceneRoots:
   - {fileID: 652785165}
   - {fileID: 1104861004}
   - {fileID: 854796888}
+  - {fileID: 962300505}

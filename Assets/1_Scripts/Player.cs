@@ -11,6 +11,10 @@ public class Player : MonoBehaviour
 	[Header("Get")]
 	public float maxGetDistance;
 
+	[Header("Oxygen")]
+	public float currentOxygen;
+	public float maxOxygen;
+
 	private Camera mainCamera;
 	private GameObject Spaceship;
 
@@ -20,6 +24,8 @@ public class Player : MonoBehaviour
 
 	private void Start()
 	{
+		currentOxygen = maxOxygen;
+
 		mainCamera = Camera.main;
 		Spaceship = GameObject.FindGameObjectWithTag("Spaceship");
 
@@ -54,9 +60,8 @@ public class Player : MonoBehaviour
 		transform.Translate(currentVelocity * Time.deltaTime, Space.World);
 
 
-		// 최대 거리 (=산소 케이블)
+		// 최대 거리
 		float distance = Vector3.Distance(transform.position, Spaceship.transform.position);
-		Debug.Log(distance);
 
 		if (distance > maxDistance)
 		{ 
@@ -89,5 +94,9 @@ public class Player : MonoBehaviour
 				currentResource = null;
 			}
 		}
+
+		// 산소
+		currentOxygen -= 2f * Time.deltaTime;
+		currentOxygen = Mathf.Clamp(currentOxygen, 0, maxOxygen);
 	}
 }

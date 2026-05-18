@@ -10,7 +10,6 @@ public class PathMaker : MonoBehaviour
 	public Vector3[] pathPos;
 
 	public float pathLength;
-	public float displayLength;
 
 	public GameObject minimapCircle;
 

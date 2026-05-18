@@ -1,10 +1,11 @@
 using System.Collections;
 using UnityEngine;
 
-public class SpaceShipMove : MonoBehaviour
+public class SpaceShip : MonoBehaviour
 {
 	public GameObject pathObj;
-	public float moveSpeed;
+	public float currentMoveSpeed;
+	public float maxMoveSpeed;
 
 	private LineRenderer lineRenderer;
 	private Vector3[] pathPos;
@@ -12,14 +13,17 @@ public class SpaceShipMove : MonoBehaviour
 
 	private void Start()
 	{
+		currentMoveSpeed = maxMoveSpeed;
+
 		lineRenderer = pathObj.GetComponent<LineRenderer>();
 		pathPos = pathObj.GetComponent<PathMaker>().pathPos;
+
 		index = 0;
 	}
 
 	private void Update()
 	{
-		transform.position = Vector3.MoveTowards(transform.position, pathPos[index], moveSpeed * Time.deltaTime);
+		transform.position = Vector3.MoveTowards(transform.position, pathPos[index], currentMoveSpeed * Time.deltaTime);
 	
 		if (Vector3.Distance(transform.position, pathPos[index]) < 0.01f)
 		{
@@ -28,10 +32,8 @@ public class SpaceShipMove : MonoBehaviour
 				index = 0;
 				transform.position = pathPos[index];
 			}
-			index++;
 
-			Debug.Log(index);
-			Debug.Log(pathPos[index]);
+			index++;
 
 			Vector3 dir = pathPos[index] - transform.position;
 			Quaternion targetRotation = Quaternion.LookRotation(dir);
@@ -39,6 +41,15 @@ public class SpaceShipMove : MonoBehaviour
 
 			StartCoroutine(SmoothRotate(transform.rotation, targetRotation));
 		}
+
+		if (Input.GetKeyDown(KeyCode.F))
+		{
+			currentMoveSpeed = maxMoveSpeed;
+			
+		}
+
+		currentMoveSpeed -= 0.02f * Time.deltaTime;
+		currentMoveSpeed = Mathf.Clamp(currentMoveSpeed, 1f, maxMoveSpeed);
 	}
 
 	IEnumerator SmoothRotate(Quaternion startRot, Quaternion endRot) 

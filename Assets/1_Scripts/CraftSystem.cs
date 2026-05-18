@@ -25,7 +25,7 @@ public class CraftSystem : MonoBehaviour
 	{
 		int index = (int)currentItemType;
 		ItemType upgradeItemType = (ItemType)(index + 1);
-		setItem(currentItemType, upgradeItemType);
+		SetItem(currentItemType, upgradeItemType);
 	}
 
 	private void Update()

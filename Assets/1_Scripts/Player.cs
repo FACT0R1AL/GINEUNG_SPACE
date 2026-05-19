@@ -16,7 +16,9 @@ public class Player : MonoBehaviour
 	public float maxOxygen;
 
 	private Camera mainCamera;
+
 	private GameObject Spaceship;
+	private bool isInSpaceship;
 
 	private GameObject currentResource;
 
@@ -96,7 +98,44 @@ public class Player : MonoBehaviour
 		}
 
 		// »ê¼Ò
-		currentOxygen -= 2f * Time.deltaTime;
+		if (Input.GetKeyDown(KeyCode.F))
+		{
+			currentOxygen = maxOxygen;
+		}
+
+		if (isInSpaceship)
+		{
+			currentOxygen += 10f * Time.deltaTime;
+		}
+		else
+		{
+			currentOxygen -= 2f * Time.deltaTime;
+		}
 		currentOxygen = Mathf.Clamp(currentOxygen, 0, maxOxygen);
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.CompareTag("Spaceship"))
+		{
+			isInSpaceship = true;
+		}
+	}
+
+	private void OnTriggerExit(Collider other)
+	{
+		if (other.gameObject.CompareTag("Spaceship"))
+		{
+			isInSpaceship = false;
+		}
+	}
+
+	private void OnCollisionEnter(Collision collision)
+	{
+		if (collision.gameObject.CompareTag("Resource"))
+		{
+			Vector3 dir = transform.position - collision.transform.position;
+			collision.gameObject.GetComponent<Rigidbody>().AddForce(dir.normalized * 20f, ForceMode.Impulse);
+		}
 	}
 }

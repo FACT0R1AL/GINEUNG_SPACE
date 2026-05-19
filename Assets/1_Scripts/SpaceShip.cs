@@ -3,9 +3,13 @@ using UnityEngine;
 
 public class SpaceShip : MonoBehaviour
 {
+	[Header("Move")]
 	public GameObject pathObj;
 	public float currentMoveSpeed;
 	public float maxMoveSpeed;
+
+	[Header("Hitbox")]
+	public GameObject spaceshipHitbox;
 
 	private LineRenderer lineRenderer;
 	private Vector3[] pathPos;
@@ -45,7 +49,6 @@ public class SpaceShip : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.F))
 		{
 			currentMoveSpeed = maxMoveSpeed;
-			
 		}
 
 		currentMoveSpeed -= 0.02f * Time.deltaTime;

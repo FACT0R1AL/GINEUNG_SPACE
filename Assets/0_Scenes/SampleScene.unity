@@ -406,6 +406,7 @@ MonoBehaviour:
   pathObj: {fileID: 2089036187}
   currentMoveSpeed: 3
   maxMoveSpeed: 3
+  spaceshipHitbox: {fileID: 0}
 --- !u!1 &78673303
 GameObject:
   m_ObjectHideFlags: 0
@@ -1348,7 +1349,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CanvasTowardPlayer
   worldCanvas: {fileID: 249729236}
-  player: {fileID: 715316387}
 --- !u!1 &249863220
 GameObject:
   m_ObjectHideFlags: 0
@@ -6616,8 +6616,8 @@ MonoBehaviour:
   distance: 0
   xSpeed: 120
   ySpeed: 120
-  yMinLimit: -40
-  yMaxLimit: 80
+  yMinLimit: -89
+  yMaxLimit: 89
   distanceMin: 0
   distanceMax: 0
   deltaVector: {x: 0, y: 0, z: 0}
@@ -12096,6 +12096,7 @@ GameObject:
   - component: {fileID: 652785164}
   - component: {fileID: 652785163}
   - component: {fileID: 652785162}
+  - component: {fileID: 652785166}
   m_Layer: 6
   m_Name: Resource
   m_TagString: Resource
@@ -12197,6 +12198,33 @@ Transform:
   - {fileID: 249729233}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &652785166
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652785161}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &659046125
 GameObject:
   m_ObjectHideFlags: 0
@@ -12561,7 +12589,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 715316387}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 100000
   m_LinearDamping: 0
   m_AngularDamping: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -19402,7 +19430,7 @@ GameObject:
   - component: {fileID: 1246571410}
   m_Layer: 0
   m_Name: SpaceshipHitbox
-  m_TagString: Untagged
+  m_TagString: Spaceship
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19827,7 +19855,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 80, y: 60}
+  m_AnchoredPosition: {x: 5, y: 110}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1316734809

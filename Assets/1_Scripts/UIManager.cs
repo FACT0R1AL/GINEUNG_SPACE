@@ -37,7 +37,11 @@ public class UIManager : MonoBehaviour
 		spaceshipVelocityText.text = $"{Mathf.Round(spaceship.GetComponent<SpaceShip>().currentMoveSpeed * 1000f)}km/s";
 		spaceshipVelocityImage.fillAmount = (spaceship.GetComponent<SpaceShip>().currentMoveSpeed * 1000f) / (spaceship.GetComponent<SpaceShip>().maxMoveSpeed * 1000f);
 
-		oxygenTankText.text = $"{Mathf.Round(player.GetComponent<Player>().currentOxygen / (player.GetComponent<Player>().currentOxygen / 100f))}%";
-		oxygenTankImage.fillAmount = player.GetComponent<Player>().currentOxygen / (player.GetComponent<Player>().currentOxygen / 100f) / 100f;
+		oxygenTankImage.fillAmount = player.GetComponent<Player>().currentOxygen / player.GetComponent<Player>().maxOxygen;
+		oxygenTankText.text = $"{Mathf.Round((player.GetComponent<Player>().currentOxygen / player.GetComponent<Player>().maxOxygen) * 100f)}%";
+		oxygenTankText.GetComponent<RectTransform>().localPosition =
+			new Vector3(oxygenTankText.GetComponent<RectTransform>().localPosition.x,
+						170f * oxygenTankImage.fillAmount - 60f,
+						oxygenTankText.GetComponent<RectTransform>().localPosition.z);
 	}
 }

@@ -1,12 +1,22 @@
 using UnityEngine;
 
+
+[System.Serializable]
+public struct SpriteInfo
+{
+	public Sprite sprite;
+	public ItemType itemType;
+}
+
 public class GameManager : MonoBehaviour
 {
 	public static GameManager instance;
 
 	public GameObject inventoryUI;
+	public SpriteInfo[] spriteInfos;
 
-	private void Awake()
+
+    private void Awake()
 	{
 		if (instance == null)
 		{
@@ -32,4 +42,16 @@ public class GameManager : MonoBehaviour
 			}
 		}
 	}
+
+	public Sprite GetSprite(ItemType itemType)
+	{
+		foreach (var info in spriteInfos)
+		{
+			if (info.itemType == itemType)
+			{
+				return info.sprite;
+			}
+		}
+		return null; // 또는 기본 스프라이트 반환
+    }
 }

@@ -1,13 +1,18 @@
 using System.Collections;
+using System.ComponentModel;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.AdaptivePerformance.Provider.AdaptivePerformanceSubsystemDescriptor;
 
 public class FixUI : MonoBehaviour
 {
     [Header("필수 요소")]
     public Slider _Slider;
     public Button _goStopButton;
+    public Transform itemInfoPanel;
+    public GameObject itemInfoPrefab;
+    public GameObject fixStartPanel;
 
     private RectTransform _rectRangeBox;
     private RectTransform _rectSlider;
@@ -28,6 +33,7 @@ public class FixUI : MonoBehaviour
     private float _rangeMax = 0f;
 
     public FixType fixType;
+    public FixInfo fixInfo;
 
     private void Awake()
     {
@@ -43,19 +49,92 @@ public class FixUI : MonoBehaviour
         _rectRangeBox.anchorMax = new Vector2(0f, 0.5f);
         _rectRangeBox.pivot = new Vector2(0f, 0.5f);
 
-        _goStopButton.interactable = false;
-
         _Slider.minValue = 0f;
         _Slider.maxValue = 100f;
 
         gameObject.SetActive(false);
     }
 
+    public void Init()
+    {
+        _rectRangeBox.anchorMin = new Vector2(0f, 0.5f);
+        _rectRangeBox.anchorMax = new Vector2(0f, 0.5f);
+        _rectRangeBox.pivot = new Vector2(0f, 0.5f);
+        fixStartPanel.SetActive(true);
+    }
+
+    public void fixStart()
+    {
+        bool isFix = true;
+
+
+        foreach (var fixData in fixInfo.fixData)
+        {
+            var itemData = fixData.itemdata;
+
+            int count = InventoryManager.Instance.GetItemCount(itemData.itemType);
+
+            if (count <= 0)
+            {
+                isFix = false;
+                break;
+            }
+            else if (count < itemData.count)
+            {
+                isFix = false;
+                break;
+            }
+
+        }
+
+        if (isFix)
+        {
+            fixStartPanel.SetActive(false);
+            OnStartSC();
+        }
+        else
+        {
+            Debug.Log("재료가 부족합니다");
+        }
+    }
+
     public void Show(FixType fixType)
     {
         gameObject.SetActive(true);
-        OnStartSC();
+        Init();
         this.fixType = fixType;
+        FixInfo info = FixManager.Instance.GetFixInfo(fixType);
+        fixInfo = info;
+        for (int i = itemInfoPanel.childCount - 1; i >= 0; i--)
+        {
+            Destroy(itemInfoPanel.GetChild(i).gameObject);
+        }
+        foreach (var itemData in info.fixData)
+        {
+            var itemInfoObj = Instantiate(itemInfoPrefab, itemInfoPanel);
+            var itemInfo = itemInfoObj.GetComponent<ItemFixSlot>();
+            var sprite = GameManager.instance.GetSprite(itemData.itemdata.itemType);
+            int level = 0;
+            switch (itemData.itemdata.itemType)
+            {
+                case ItemType.IronLv1:
+                case ItemType.CopperLv1:
+                case ItemType.PlasticLv1:
+                    level = 1;
+                    break;
+                case ItemType.IronLv2:
+                    case ItemType.CopperLv2:
+                    case ItemType.PlasticLv2:
+                    level = 2;
+                    break;
+                    case ItemType.IronLv3:
+                    case ItemType.CopperLv3:
+                    case ItemType.PlasticLv3:
+                    level = 3;
+                    break;
+            }
+            itemInfo.SetItem(sprite, level, itemData.itemdata.count);
+        }
     }
 
     private void Update()
@@ -134,6 +213,26 @@ public class FixUI : MonoBehaviour
         {
             Debug.Log($"<color=green>[미니게임 성공]</color> 멈춘 위치: {_Slider.value:F2} (정답 범위: {_rangeMin:F2} ~ {_rangeMax:F2})");
             FixManager.Instance.Fix(fixType);
+            foreach (var fixData in fixInfo.fixData)
+            {
+                int count = InventoryManager.Instance.GetItemCount(fixData.itemdata.itemType);
+                if (count >= fixData.itemdata.count)
+                {
+                    count -= fixData.itemdata.count;
+
+                    int index = (int)fixData.itemdata.itemType;
+
+                    for (int i = 0; i < InventoryManager.Instance.inventoryItems.Count; i++)
+                    {
+                        if (InventoryManager.Instance.inventoryItems[i].itemType == fixData.itemdata.itemType)
+                        {
+                            var item = InventoryManager.Instance.inventoryItems[i];
+                            item.count = count;
+                            InventoryManager.Instance.inventoryItems[i] = item;
+                        }
+                    }
+                }
+            } 
             StartCoroutine(Hide());
         }
         else

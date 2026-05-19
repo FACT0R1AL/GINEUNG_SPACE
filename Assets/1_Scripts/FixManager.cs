@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,20 @@ public enum FixType
     Wall,
     Oxygen,
     Drone
+}
+
+[System.Serializable]
+public struct FixInfo
+{
+    public FixType fixType;
+    public string fixName;
+    public List<FixData> fixData;
+}
+
+[System.Serializable]
+public struct FixData
+{
+    public ItemData itemdata;
 }
 
 public class FixManager : MonoBehaviour
@@ -27,7 +42,7 @@ public class FixManager : MonoBehaviour
     public Image oxygenImage;
     public Image droneImage;
 
-    public FixType fix;
+    public List<FixInfo> fixInfo = new List<FixInfo>();
 
     private void Awake()
     {
@@ -39,6 +54,18 @@ public class FixManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public FixInfo GetFixInfo(FixType fixType)
+    {
+        foreach (var info in fixInfo)
+        {
+            if (info.fixType == fixType)
+            {
+                return info;
+            }
+        }
+        return default; // 또는 예외 처리
     }
 
     public void Fix(FixType fix)

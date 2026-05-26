@@ -274,6 +274,105 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 46576966}
   m_CullTransparentMesh: 1
+--- !u!1 &48408317
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 48408319}
+  - component: {fileID: 48408318}
+  m_Layer: 0
+  m_Name: InventoryManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &48408318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48408317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 407188a8d71925142bb2b7e2a38e5776, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
+  inventoryItems:
+  - itemType: 0
+    count: 0
+    icon: {fileID: -7115155490205728876, guid: aadc6115129ad4848baae250158940ef, type: 3}
+    color: {r: 1, g: 0.8970643, b: 0, a: 1}
+    itemInfo: "\uC6B0\uC8FC\uC5D0 \uBC84\uB824\uC9C4 \uCCA0Lv.1\uC785\uB2C8\uB2E4.
+      \n2\uAC1C\uB85C \uCCA0Lv.2\uB85C \uC5C5\uADF8\uB808\uC774\uB4DC \uD560\uC218\uC788\uC2B5\uB2C8\uB2E4."
+  - itemType: 1
+    count: 0
+    icon: {fileID: -7115155490205728876, guid: aadc6115129ad4848baae250158940ef, type: 3}
+    color: {r: 0, g: 0.39215687, b: 1, a: 1}
+    itemInfo: "\uC6B0\uC8FC\uC5D0 \uBC84\uB824\uC9C4 \uCCA0Lv.2\uC785\uB2C8\uB2E4.
+      \n2\uAC1C\uB85C \uCCA0Lv.3\uB85C \uC5C5\uADF8\uB808\uC774\uB4DC \uD560\uC218\uC788\uC2B5\uB2C8\uB2E4."
+  - itemType: 2
+    count: 0
+    icon: {fileID: -7115155490205728876, guid: aadc6115129ad4848baae250158940ef, type: 3}
+    color: {r: 0.50542545, g: 0, b: 1, a: 1}
+    itemInfo: "\uC6B0\uC8FC\uC5D0 \uBC84\uB824\uC9C4 \uCCA0Lv.3\uC785\uB2C8\uB2E4."
+  - itemType: 3
+    count: 0
+    icon: {fileID: 21300000, guid: 86841d4889e7b91429afeae5555bf937, type: 3}
+    color: {r: 1, g: 0.8980392, b: 0, a: 1}
+    itemInfo: "\uC6B0\uC8FC\uC5D0 \uBC84\uB824\uC9C4 \uAD6C\uB9ACLv.1\uC785\uB2C8\uB2E4.
+      \n2\uAC1C\uB85C \uAD6C\uB9ACLv.2\uB85C \uC5C5\uADF8\uB808\uC774\uB4DC \uD560\uC218\uC788\uC2B5\uB2C8\uB2E4."
+  - itemType: 4
+    count: 0
+    icon: {fileID: 21300000, guid: 86841d4889e7b91429afeae5555bf937, type: 3}
+    color: {r: 0, g: 0.39215687, b: 1, a: 1}
+    itemInfo: "\uC6B0\uC8FC\uC5D0 \uBC84\uB824\uC9C4 \uAD6C\uB9ACLv.2\uC785\uB2C8\uB2E4.
+      \n2\uAC1C\uB85C \uAD6C\uB9ACLv.3\uB85C \uC5C5\uADF8\uB808\uC774\uB4DC \uD560\uC218\uC788\uC2B5\uB2C8\uB2E4."
+  - itemType: 5
+    count: 0
+    icon: {fileID: 21300000, guid: 86841d4889e7b91429afeae5555bf937, type: 3}
+    color: {r: 0.5058824, g: 0, b: 1, a: 1}
+    itemInfo: "\uC6B0\uC8FC\uC5D0 \uBC84\uB824\uC9C4 \uAD6C\uB9ACLv.3\uC785\uB2C8\uB2E4."
+  - itemType: 6
+    count: 0
+    icon: {fileID: 21300000, guid: c3a7b00cb961cf742a8ed5b6bb92d4fc, type: 3}
+    color: {r: 1, g: 0.8980392, b: 0, a: 1}
+    itemInfo: "\uC6B0\uC8FC\uC5D0 \uBC84\uB824\uC9C4 \uD50C\uB77C\uC2A4\uD2F1Lv.1\uC785\uB2C8\uB2E4.
+      \n2\uAC1C\uB85C \uD50C\uB77C\uC2A4\uD2F1Lv.2\uB85C \uC5C5\uADF8\uB808\uC774\uB4DC
+      \uD560\uC218\uC788\uC2B5\uB2C8\uB2E4."
+  - itemType: 7
+    count: 0
+    icon: {fileID: 21300000, guid: c3a7b00cb961cf742a8ed5b6bb92d4fc, type: 3}
+    color: {r: 0, g: 0.39215687, b: 1, a: 1}
+    itemInfo: "\uC6B0\uC8FC\uC5D0 \uBC84\uB824\uC9C4 \uD50C\uB77C\uC2A4\uD2F1Lv.3\uC785\uB2C8\uB2E4.
+      \n2\uAC1C\uB85C \uD50C\uB77C\uC2A4\uD2F1Lv.3\uB85C \uC5C5\uADF8\uB808\uC774\uB4DC
+      \uD560\uC218\uC788\uC2B5\uB2C8\uB2E4."
+  - itemType: 8
+    count: 0
+    icon: {fileID: 21300000, guid: c3a7b00cb961cf742a8ed5b6bb92d4fc, type: 3}
+    color: {r: 0.5058824, g: 0, b: 1, a: 1}
+    itemInfo: "\uC6B0\uC8FC\uC5D0 \uBC84\uB824\uC9C4 \uD50C\uB77C\uC2A4\uD2F1Lv.3\uC785\uB2C8\uB2E4."
+  craftSystem: {fileID: 0}
+--- !u!4 &48408319
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48408317}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -26.07395, y: 589.52313, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &58965075
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,8 +503,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceShipMove
   pathObj: {fileID: 2089036187}
-  currentMoveSpeed: 3
-  maxMoveSpeed: 3
+  currentMoveSpeed: 5
+  maxMoveSpeed: 5
   spaceshipHitbox: {fileID: 0}
 --- !u!1 &78673303
 GameObject:
@@ -6621,6 +6720,207 @@ MonoBehaviour:
   distanceMin: 0
   distanceMax: 0
   deltaVector: {x: 0, y: 0, z: 0}
+--- !u!1 &352756373
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 352756375}
+  - component: {fileID: 352756374}
+  m_Layer: 0
+  m_Name: SystemManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &352756374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352756373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d84325a1602e6a4cab090fd2b9a2dc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SystemManager
+  systems:
+  - systemName: "\uC5D4\uC9C4"
+    currentLevel: 1
+    MaxLevel: 3
+    upgradeInfos:
+    - currentLevel: 1
+      upgradeDesc: "\uC5D4\uC9C4 \uCD9C\uB825 100"
+      upgradeData:
+        itemDatas: []
+    - currentLevel: 2
+      upgradeDesc: "\uC5D4\uC9C4 \uCD9C\uB825 120"
+      upgradeData:
+        itemDatas:
+        - itemType: 1
+          count: 1
+        - itemType: 4
+          count: 2
+    - currentLevel: 3
+      upgradeDesc: "\uC5D4\uC9C4 \uCD9C\uB825 150"
+      upgradeData:
+        itemDatas:
+        - itemType: 2
+          count: 5
+        - itemType: 4
+          count: 5
+        - itemType: 6
+          count: 2
+  - systemName: "\uC678\uBCBD"
+    currentLevel: 1
+    MaxLevel: 3
+    upgradeInfos:
+    - currentLevel: 1
+      upgradeDesc: "\uC5D4\uC9C4 \uBD80\uC2A4\uD130 \uCD08\uAE30 \uC18D\uB3C4\uB97C
+        50"
+      upgradeData:
+        itemDatas: []
+    - currentLevel: 2
+      upgradeDesc: "\uC5D4\uC9C4 \uBD80\uC2A4\uD130 \uCD08\uAE30 \uC18D\uB3C4\uB97C
+        70"
+      upgradeData:
+        itemDatas:
+        - itemType: 1
+          count: 1
+        - itemType: 4
+          count: 2
+    - currentLevel: 3
+      upgradeDesc: "\uC5D4\uC9C4 \uBD80\uC2A4\uD130 \uCD08\uAE30 \uC18D\uB3C4\uB97C
+        100"
+      upgradeData:
+        itemDatas:
+        - itemType: 2
+          count: 5
+        - itemType: 4
+          count: 5
+        - itemType: 6
+          count: 2
+  - systemName: "\uC0B0\uC18C\uD0F1\uD06C"
+    currentLevel: 1
+    MaxLevel: 3
+    upgradeInfos:
+    - currentLevel: 1
+      upgradeDesc: "\uD50C\uB808\uC774\uC5B4\uC758 \uC0B0\uC18C \uCD1D\uB7C9\uC744
+        100"
+      upgradeData:
+        itemDatas: []
+    - currentLevel: 2
+      upgradeDesc: "\uD50C\uB808\uC774\uC5B4\uC758 \uC0B0\uC18C \uCD1D\uB7C9\uC744
+        200"
+      upgradeData:
+        itemDatas:
+        - itemType: 1
+          count: 1
+        - itemType: 4
+          count: 2
+    - currentLevel: 3
+      upgradeDesc: "\uD50C\uB808\uC774\uC5B4\uC758 \uC0B0\uC18C \uCD1D\uB7C9\uC744
+        300"
+      upgradeData:
+        itemDatas:
+        - itemType: 2
+          count: 5
+        - itemType: 4
+          count: 5
+        - itemType: 6
+          count: 2
+  - systemName: "\uC6B0\uC8FC\uBCF5"
+    currentLevel: 1
+    MaxLevel: 3
+    upgradeInfos:
+    - currentLevel: 1
+      upgradeDesc: "\uC790\uC6D0 \uC218\uC9D1 \uC2DC \uD574\uB2F9 \uAE30\uCD08 \uC790\uC6D0\uC774
+        1\uAC1C\uC529 \uC218\uC9D1\uB41C\uB2E4."
+      upgradeData:
+        itemDatas: []
+    - currentLevel: 2
+      upgradeDesc: "\uC790\uC6D0 \uC218\uC9D1 \uC2DC \uD574\uB2F9 \uAE30\uCD08 \uC790\uC6D0\uC774
+        1~2\uAC1C\uC529 \uC218\uC9D1\uB41C\uB2E4.\n\uC790\uC6D0\uC774 2\uAC1C \uC218\uC9D1\uB420
+        \uD655\uB960\uC740 20%\uC774\uB2E4."
+      upgradeData:
+        itemDatas:
+        - itemType: 1
+          count: 1
+        - itemType: 4
+          count: 2
+    - currentLevel: 3
+      upgradeDesc: "\uC790\uC6D0 \uC218\uC9D1 \uC2DC \uD574\uB2F9 \uAE30\uCD08 \uC790\uC6D0\uC774
+        1~3\uAC1C\uC529 \uC218\uC9D1\uB41C\uB2E4.\n\uC790\uC6D0\uC774 2\uAC1C \uC218\uC9D1\uB420
+        \uD655\uB960\uC740 30%\uC774\uB2E4.\n\uC790\uC6D0\uC774 3\uAC1C \uC218\uC9D1\uB420
+        \uD655\uB960\uC740 15%\uC774\uB2E4"
+      upgradeData:
+        itemDatas:
+        - itemType: 2
+          count: 5
+        - itemType: 4
+          count: 5
+        - itemType: 6
+          count: 2
+  - systemName: "\uCC44\uC9D1\uB85C\uBD07"
+    currentLevel: 1
+    MaxLevel: 3
+    upgradeInfos:
+    - currentLevel: 1
+      upgradeDesc: "\uCC44\uC9D1\uB85C\uBD07 \uAC1C\uBC1C\uC804 \uC0C1\uD0DC\uB85C
+        \uC790\uB3D9 \uC218\uC9D1\uC744 \uD560 \uC218 \uC5C6\uB2E4."
+      upgradeData:
+        itemDatas: []
+    - currentLevel: 2
+      upgradeDesc: "n\uCD08\uB9C8\uB2E4 \uAE30\uCD08 \uC790\uC6D0(Lv1)\uC774 \uB79C\uB364\uC73C\uB85C
+        1\uAC1C \uC218\uC9D1\uD55C\uB2E4."
+      upgradeData:
+        itemDatas:
+        - itemType: 1
+          count: 1
+        - itemType: 4
+          count: 2
+    - currentLevel: 3
+      upgradeDesc: "n\uCD08\uB9C8\uB2E4 \uAE30\uCD08 \uC790\uC6D0(Lv1)\uC774 \uB79C\uB364\uC73C\uB85C
+        2\uAC1C \uC218\uC9D1\uD55C\uB2E4."
+      upgradeData:
+        itemDatas:
+        - itemType: 2
+          count: 5
+        - itemType: 4
+          count: 5
+        - itemType: 6
+          count: 2
+    - currentLevel: 4
+      upgradeDesc: "n\uCD08\uB9C8\uB2E4 \uAE30\uCD08 \uC790\uC6D0(Lv1)\uC774 \uB79C\uB364\uC73C\uB85C
+        3\uAC1C \uC218\uC9D1\uD55C\uB2E4."
+      upgradeData:
+        itemDatas:
+        - itemType: 2
+          count: 5
+        - itemType: 4
+          count: 5
+        - itemType: 6
+          count: 2
+--- !u!4 &352756375
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352756373}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -31.2723, y: 3.41456, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &377068801
 GameObject:
   m_ObjectHideFlags: 0
@@ -12001,9 +12301,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1510693017}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -40, y: -100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 130, y: 15}
   m_SizeDelta: {x: 250, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &566051451
@@ -12033,7 +12333,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 48
-    m_Alignment: 4
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -12095,6 +12395,7 @@ GameObject:
   - component: {fileID: 652785165}
   - component: {fileID: 652785164}
   - component: {fileID: 652785163}
+  - component: {fileID: 652785167}
   - component: {fileID: 652785162}
   - component: {fileID: 652785166}
   m_Layer: 6
@@ -12225,6 +12526,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &652785167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652785161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 033d75dca127f1e4bbb728b53d3f4f2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Resource
+  ResourceUI: {fileID: 249729232}
+  itemType: 0
+  count: 1
 --- !u!1 &659046125
 GameObject:
   m_ObjectHideFlags: 0
@@ -13529,6 +13845,7 @@ MonoBehaviour:
   oxygenTankText: {fileID: 1316734809}
   oxygenTankImage: {fileID: 46576968}
   remainingDistanceText: {fileID: 566051451}
+  timerText: {fileID: 249863222}
 --- !u!1 &967415795
 GameObject:
   m_ObjectHideFlags: 0
@@ -14368,6 +14685,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   inventoryUI: {fileID: 0}
+  spriteInfos: []
 --- !u!4 &1104861004
 Transform:
   m_ObjectHideFlags: 0
@@ -36030,7 +36348,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uBAA9\uC801\uC9C0 \uB3C4\uCC29\uAE4C\uC9C0"
+  m_Text: "\uBAA9\uC801\uC9C0 \uB3C4\uCC29\uAE4C\uC9C0 \uB0A8\uC740 \uC608\uC0C1
+    \uC2DC\uAC04"
 --- !u!222 &2045474481
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -36455,3 +36774,5 @@ SceneRoots:
   - {fileID: 1104861004}
   - {fileID: 854796888}
   - {fileID: 962300505}
+  - {fileID: 352756375}
+  - {fileID: 48408319}

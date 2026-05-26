@@ -31,12 +31,6 @@ public class SpaceShip : MonoBehaviour
 	
 		if (Vector3.Distance(transform.position, pathPos[index]) < 0.01f)
 		{
-			if (index == pathPos.Length-1)
-			{
-				index = 0;
-				transform.position = pathPos[index];
-			}
-
 			index++;
 
 			Vector3 dir = pathPos[index] - transform.position;
@@ -46,7 +40,7 @@ public class SpaceShip : MonoBehaviour
 			StartCoroutine(SmoothRotate(transform.rotation, targetRotation));
 		}
 
-		if (Input.GetKeyDown(KeyCode.F))
+		if (Input.GetKeyDown(KeyCode.F1))
 		{
 			currentMoveSpeed = maxMoveSpeed;
 		}

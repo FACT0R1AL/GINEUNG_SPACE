@@ -98,7 +98,7 @@ public class Player : MonoBehaviour
 		}
 
 		// »ê¼Ò
-		if (Input.GetKeyDown(KeyCode.F))
+		if (Input.GetKeyDown(KeyCode.F1))
 		{
 			currentOxygen = maxOxygen;
 		}
@@ -135,7 +135,7 @@ public class Player : MonoBehaviour
 		if (collision.gameObject.CompareTag("Resource"))
 		{
 			Vector3 dir = transform.position - collision.transform.position;
-			collision.gameObject.GetComponent<Rigidbody>().AddForce(dir.normalized * 20f, ForceMode.Impulse);
+			collision.gameObject.GetComponent<Rigidbody>().AddForce(dir.normalized * currentVelocity.magnitude, ForceMode.Impulse);
 		}
 	}
 }

@@ -7,12 +7,14 @@ using static UnityEngine.AdaptivePerformance.Provider.AdaptivePerformanceSubsyst
 
 public class FixUI : MonoBehaviour
 {
-    [Header("ÇÊ¼ö ¿ä¼Ò")]
+    [Header("ï¿½Ê¼ï¿½ ï¿½ï¿½ï¿½")]
     public Slider _Slider;
     public Button _goStopButton;
     public Transform itemInfoPanel;
     public GameObject itemInfoPrefab;
     public GameObject fixStartPanel;
+
+    public Text nameText;
 
     private RectTransform _rectRangeBox;
     private RectTransform _rectSlider;
@@ -20,20 +22,25 @@ public class FixUI : MonoBehaviour
     private bool _IsSuccessful = false;
     private bool _IsMove = false;
 
-    [Header("½½¶óÀÌ´õ ±¸µ¿ ¼³Á¤")]
-    public float speed = 100f; // ½½¶óÀÌ´õ ¿Õº¹ ¼Óµµ
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
+    public float speed = 100f; // ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½Õºï¿½ ï¿½Óµï¿½
     private bool _movingUp = true;
 
-    [Header("¡Ú ¹üÀ§ »óÀÚ Å©±â Á¶Àý (0~100 ±âÁØ ÆÛ¼¾Æ®)")]
-    [Range(1f, 100f)] public float minSizePercent = 15f; // ÀÎ½ºÆåÅÍ¿¡¼­ Á¶ÀýÇÒ ÃÖ¼Ò Å©±â
-    [Range(1f, 100f)] public float maxSizePercent = 30f; // ÀÎ½ºÆåÅÍ¿¡¼­ Á¶ÀýÇÒ ÃÖ´ë Å©±â
+    [Header("ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (0~100 ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½Æ®)")]
+    [Range(1f, 100f)] public float minSizePercent = 15f; // ï¿½Î½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ Å©ï¿½ï¿½
+    [Range(1f, 100f)] public float maxSizePercent = 30f; // ï¿½Î½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ Å©ï¿½ï¿½
 
-    // ³»ºÎ¿¡¼­ »ç¿ëÇÒ ¼º°ø ¹üÀ§ ÀúÀå º¯¼ö (0 ~ 100 ±âÁØ)
+    // ï¿½ï¿½ï¿½Î¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (0 ~ 100 ï¿½ï¿½ï¿½ï¿½)
     private float _rangeMin = 0f;
     private float _rangeMax = 0f;
 
     public FixType fixType;
     public FixInfo fixInfo;
+
+    public GameObject SussecUI;
+    public GameObject failUI;
+    public Animator sussecAnimator;
+    public Animator failAnimator;
 
     private void Awake()
     {
@@ -44,13 +51,16 @@ public class FixUI : MonoBehaviour
         _rectRangeBox.gameObject.SetActive(false);
         _rectSlider = _Slider.GetComponent<RectTransform>();
 
-        // UI Á¤·Ä °­Á¦ ÃÊ±âÈ­ (¿ÞÂÊ Á¤·Ä, ¿ÞÂÊ ÇÇ¹þ)
+        // UI ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¹ï¿½)
         _rectRangeBox.anchorMin = new Vector2(0f, 0.5f);
         _rectRangeBox.anchorMax = new Vector2(0f, 0.5f);
         _rectRangeBox.pivot = new Vector2(0f, 0.5f);
 
         _Slider.minValue = 0f;
         _Slider.maxValue = 100f;
+        
+        SussecUI.SetActive(false);
+        failUI.SetActive(false);
 
         gameObject.SetActive(false);
     }
@@ -94,7 +104,7 @@ public class FixUI : MonoBehaviour
         }
         else
         {
-            Debug.Log("Àç·á°¡ ºÎÁ·ÇÕ´Ï´Ù");
+           GameManager.instance.SendMessage("ìž¬ë£Œê°€ ë¶€ì¡±í•©ë‹ˆë‹¤!", Color.red);
         }
     }
 
@@ -105,6 +115,7 @@ public class FixUI : MonoBehaviour
         this.fixType = fixType;
         FixInfo info = FixManager.Instance.GetFixInfo(fixType);
         fixInfo = info;
+        nameText.text = info.fixName + " ìˆ˜ë¦¬";
         for (int i = itemInfoPanel.childCount - 1; i >= 0; i--)
         {
             Destroy(itemInfoPanel.GetChild(i).gameObject);
@@ -141,7 +152,7 @@ public class FixUI : MonoBehaviour
     {
         if (!_IsMove) return;
 
-        // ½½¶óÀÌ´õ ¹Ù ±¸µ¿ (0 ~ 100 ¹«ÇÑ ¿Õº¹)
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (0 ~ 100 ï¿½ï¿½ï¿½ï¿½ ï¿½Õºï¿½)
         if (_movingUp)
         {
             _Slider.value += speed * Time.deltaTime;
@@ -168,7 +179,7 @@ public class FixUI : MonoBehaviour
         _Slider.value = 0f;
         _movingUp = true;
 
-        // ¿¹¿Ü ¹æÁö: ¸¸¾à ÃÖ¼Ú°ªÀÌ ÃÖ´ñ°ªº¸´Ù Å©°Ô ¼³Á¤µÇ¾î ÀÖ´Ù¸é ÀÚµ¿À¸·Î º¸Á¤
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼Ú°ï¿½ï¿½ï¿½ ï¿½Ö´ñ°ªºï¿½ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (minSizePercent > maxSizePercent)
         {
             float temp = minSizePercent;
@@ -176,20 +187,20 @@ public class FixUI : MonoBehaviour
             maxSizePercent = temp;
         }
 
-        // ÀüÃ¼ ½½¶óÀÌ´õÀÇ ½ÇÁ¦ ÇÈ¼¿ °¡·Î Å©±â
+        // ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½È¼ï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½
         float sliderWidth = _rectSlider.rect.width;
 
-        // 1. ÀÎ½ºÆåÅÍ¿¡¼­ ¼³Á¤ÇÑ ÃÖ¼Ò/ÃÖ´ë ¹üÀ§ »çÀÌ¿¡¼­ ·£´ýÇÏ°Ô Å©±â¸¦ °áÁ¤ÇÕ´Ï´Ù.
+        // 1. ï¿½Î½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½/ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ Å©ï¿½â¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
         float sizePercent = Random.Range(minSizePercent, maxSizePercent);
 
-        // 2. ÃÖ´ë 100À» ³ÑÁö ¾Êµµ·Ï, ¹èÄ¡ °¡´ÉÇÑ ÃÖ´ë ½ÃÀÛÁ¡À» Á¦ÇÑ (100 - »óÀÚÅ©±â)
+        // 2. ï¿½Ö´ï¿½ 100ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½, ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (100 - ï¿½ï¿½ï¿½ï¿½Å©ï¿½ï¿½)
         float maxStartPercent = 100f - sizePercent;
 
-        // 3. ¾ÈÀüÇÑ ¹üÀ§ ³»¿¡¼­ ½ÃÀÛ ÆÛ¼¾Æ® °áÁ¤ (Àý´ë ¿ìÃø ÀÌÅ» ºÒ°¡)
+        // 3. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å» ï¿½Ò°ï¿½)
         _rangeMin = Random.Range(0f, maxStartPercent);
         _rangeMax = _rangeMin + sizePercent;
 
-        // 4. °áÁ¤µÈ 0~100 ±âÁØ °ªÀ» ½ÇÁ¦ UI ÇÈ¼¿ Å©±â·Î º¯È¯ÇÏ¿© Àû¿ë
+        // 4. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0~100 ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ UI ï¿½È¼ï¿½ Å©ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½
         float pixelPositionX = sliderWidth * (_rangeMin / 100f);
         float pixelWidth = sliderWidth * (sizePercent / 100f);
 
@@ -206,12 +217,15 @@ public class FixUI : MonoBehaviour
 
         _IsMove = false;
 
-        // ÇöÀç ½½¶óÀÌ´õ °ªÀÌ ¹Ì´Ï¸Ø°ú ¸Æ½Ã¸Ø »çÀÌ¿¡ ÀÖ´Â°¡?
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì´Ï¸Ø°ï¿½ ï¿½Æ½Ã¸ï¿½ ï¿½ï¿½ï¿½Ì¿ï¿½ ï¿½Ö´Â°ï¿½?
         _IsSuccessful = (_Slider.value >= _rangeMin) && (_Slider.value <= _rangeMax);
 
         if (_IsSuccessful)
         {
-            Debug.Log($"<color=green>[¹Ì´Ï°ÔÀÓ ¼º°ø]</color> ¸ØÃá À§Ä¡: {_Slider.value:F2} (Á¤´ä ¹üÀ§: {_rangeMin:F2} ~ {_rangeMax:F2})");
+            Debug.Log($"<color=green>[ï¿½Ì´Ï°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½]</color> ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡: {_Slider.value:F2} (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: {_rangeMin:F2} ~ {_rangeMax:F2})");
+            SussecUI.SetActive(true);
+            sussecAnimator.Rebind();
+            sussecAnimator.Play(0);
             FixManager.Instance.Fix(fixType);
             foreach (var fixData in fixInfo.fixData)
             {
@@ -237,7 +251,10 @@ public class FixUI : MonoBehaviour
         }
         else
         {
-            Debug.Log($"<color=red>[¹Ì´Ï°ÔÀÓ ½ÇÆÐ]</color> ¸ØÃá À§Ä¡: {_Slider.value:F2} (Á¤´ä ¹üÀ§: {_rangeMin:F2} ~ {_rangeMax:F2})");
+            Debug.Log($"<color=red>[ï¿½Ì´Ï°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½]</color> ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡: {_Slider.value:F2} (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: {_rangeMin:F2} ~ {_rangeMax:F2})");
+            failUI.SetActive(true);
+            failAnimator.Rebind();
+            failAnimator.Play(0);
             StartCoroutine(Hide());
         }
 
@@ -246,7 +263,9 @@ public class FixUI : MonoBehaviour
 
     IEnumerator Hide()
     {
-        yield return new WaitForSeconds(1f); // 1ÃÊ ´ë±â ÈÄ ¼û±è
+        yield return new WaitForSeconds(1f); // 1ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        SussecUI.SetActive(false);
+        failUI.SetActive(false);
         gameObject.SetActive(false);
     }
 }

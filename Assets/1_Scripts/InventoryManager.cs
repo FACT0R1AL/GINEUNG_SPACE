@@ -14,6 +14,8 @@ public enum ItemType
     PlasticLv1,
     PlasticLv2,
     PlasticLv3,
+    CoreLv1,
+    CoreLv2,
 }
 
 [System.Serializable]
@@ -57,7 +59,7 @@ public class InventoryManager : MonoBehaviour
             {
                 AddItem(type, 1);
             }
-            Debug.Log("¾ÆÀÌÅÛ´Ù Ãß°¡µÊ");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½Û´ï¿½ ï¿½ß°ï¿½ï¿½ï¿½");
         }
     }
 
@@ -121,6 +123,6 @@ public class InventoryManager : MonoBehaviour
                 return item.itemInfo;
             }
         }
-        return "¾ÆÀÌÅÛ Á¤º¸ ¾øÀ½";
+        return "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½";
     }
 }

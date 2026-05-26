@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,10 +36,10 @@ public class CraftSystem : MonoBehaviour
 		ingredientsCountText.text = InventoryManager.Instance.GetItemCount(currentItemType).ToString();
 		resultCountText.text = InventoryManager.Instance.GetItemCount(upgradeItemType).ToString();
         currentItemInfoText.text =
-            $"현재 아이템 정보\n\n" +
+            $"???? ?????? ????\n\n" +
             $"{InventoryManager.Instance.GetItemInfo(currentItemType)}";
         upgradeItemInfoText.text =
-            "업그레이드 아이템 정보\n\n" + 
+            "?????????? ?????? ????\n\n" + 
             $"{InventoryManager.Instance.GetItemInfo(upgradeItemType)}";
     }
 
@@ -54,6 +55,33 @@ public class CraftSystem : MonoBehaviour
 
 			int index = (int)currentItemType;
             ItemType upgradeItemType = (ItemType)(index + 1);
+            bool core1 =false;
+            bool core2 = false;
+            if (currentItemType == ItemType.CopperLv1 || currentItemType == ItemType.IronLv1 || currentItemType == ItemType.PlasticLv1)
+            {
+                core1 = true;
+            }
+            if (currentItemType == ItemType.CopperLv2 || currentItemType == ItemType.IronLv2 || currentItemType == ItemType.PlasticLv2)
+            {
+                core2 = true;
+            }
+            bool craft = false;
+            int randomValue = Random.Range(0, 101);
+            if (randomValue <= 50)
+            {
+                craft = true;
+            }
+
+            ItemType plusItemType = ItemType.CoreLv1;
+            if (core1)
+            {
+                plusItemType = ItemType.CoreLv1;
+            }
+
+            if (core2)
+            {
+                plusItemType = ItemType.CoreLv2;
+            }
 
             for (int i = 0; i < InventoryManager.Instance.inventoryItems.Count; i++)
             {
@@ -68,6 +96,16 @@ public class CraftSystem : MonoBehaviour
                     var item = InventoryManager.Instance.inventoryItems[i];
                     item.count++;
                     InventoryManager.Instance.inventoryItems[i] = item;
+                }
+
+                if (craft)
+                {
+                    if (InventoryManager.Instance.inventoryItems[i].itemType == plusItemType)
+                    {
+                        var item = InventoryManager.Instance.inventoryItems[i];
+                        item.count++;
+                        InventoryManager.Instance.inventoryItems[i] = item;
+                    }
                 }
             }
 

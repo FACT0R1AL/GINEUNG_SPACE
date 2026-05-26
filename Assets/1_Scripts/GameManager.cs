@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 	public static GameManager instance;
 
 	public GameObject inventoryUI;
+	public MessageUI messageUI;
 	public SpriteInfo[] spriteInfos;
 
 
@@ -52,6 +53,16 @@ public class GameManager : MonoBehaviour
 				return info.sprite;
 			}
 		}
-		return null; // ¶Ç´Â ±âº» ½ºÇÁ¶óÀÌÆ® ¹ÝÈ¯
+		return null; // ï¿½Ç´ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È¯
     }
+
+	public void SendMessage(string message)
+	{
+		messageUI.SendMessage(message);
+	}
+
+	public void SendMessage(string message, Color color)
+	{
+		messageUI.SendMessage(message, color);
+	}
 }

@@ -34,6 +34,18 @@ public class CraftInventoryButton : MonoBehaviour
 			Debug.Log("최고 레벨 아이템입니다.");
 			return;
         }
+
+        if (itemType == ItemType.CoreLv2)
+        {
+            Debug.Log("제작이 불가능한 아이템입니다");
+            return;
+        }
+
+        if (itemType == ItemType.CoreLv1)
+        {
+            Debug.Log("제작이 불가능한 아이템입니다");
+            return;
+        }
         
         int count = InventoryManager.Instance.GetItemCount(itemType);
         int index = (int)itemType;

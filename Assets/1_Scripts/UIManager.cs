@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Splines;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -14,29 +15,27 @@ public class UIManager : MonoBehaviour
 	public Text timerText;
 
 	private GameObject player;
-	private GameObject spaceship;
+	[SerializeField] private GameObject spaceship;
 
-	private float spaceshipPathLength;
-	private float passedPathLength;
+	[SerializeField] private float spaceshipPathLength;
+	[SerializeField] private float passedPathLength;
 
 	private void Start()
 	{
 		player = GameObject.FindGameObjectWithTag("Player");
 		spaceship = GameObject.FindGameObjectWithTag("Spaceship");
 
-		spaceshipPathLength = spaceship.GetComponent<SpaceShip>().pathObj.GetComponent<PathMaker>().pathLength * 1000f;
+		spaceshipPathLength = spaceship.GetComponent<SpaceShip>().spline.GetComponent<SplineContainer>().CalculateLength(0);
 	}
 
 	private void Update()
 	{
-		passedPathLength += spaceship.GetComponent<SpaceShip>().currentMoveSpeed * Time.deltaTime * 1000f + 1f;
+		passedPathLength += spaceship.GetComponent<SpaceShip>().currentMoveSpeed * Time.deltaTime;
 
 		float path = spaceshipPathLength - passedPathLength;
 		path = Mathf.Clamp(path, 0, spaceshipPathLength);
-		float path_man = path / 10000f;
-		float path_cheon = path % 10000f;
 
-		remainingDistanceText.text = $"{path.ToString("#,##0")}km 남음";
+		remainingDistanceText.text = $"{(path * 1000f).ToString("#,##0")}km 남음";
 
 		spaceshipVelocityText.text = $"{Mathf.Round(spaceship.GetComponent<SpaceShip>().currentMoveSpeed * 1000f)}km/s";
 		spaceshipVelocityImage.fillAmount = (spaceship.GetComponent<SpaceShip>().currentMoveSpeed * 1000f) / (spaceship.GetComponent<SpaceShip>().maxMoveSpeed * 1000f);
@@ -48,14 +47,8 @@ public class UIManager : MonoBehaviour
 						170f * oxygenTankImage.fillAmount - 60f,
 						oxygenTankText.GetComponent<RectTransform>().localPosition.z);
 
-		// ----------------------------------------------------
-		// [수정된 타이머 계산부] 
-		// 기존 스타일을 유지하면서 시간 계산 오류만 수정했습니다.
-		// ----------------------------------------------------
-
-		// 1. maxMoveSpeed 대신 현재 속도(currentMoveSpeed)로 나누어 실시간 남은 '초' 계산
 		float remainingTime = 0f;
-		float currentSpeed = spaceship.GetComponent<SpaceShip>().currentMoveSpeed * 1000f;
+		float currentSpeed = spaceship.GetComponent<SpaceShip>().currentMoveSpeed;
 
 		if (currentSpeed > 0)
 		{

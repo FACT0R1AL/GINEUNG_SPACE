@@ -71,14 +71,14 @@ public class Player : MonoBehaviour
 			currentVelocity = Vector3.zero;
 		}
 
-		lineRenderer.SetPosition(0, transform.position);
-		lineRenderer.SetPosition(1, Spaceship.transform.position);
-
+		// ÀÚ¿ø¸Ô±â
 		Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
 		RaycastHit hit;
 
 		if (Physics.Raycast(ray, out hit, maxGetDistance, LayerMask.GetMask("Resource")))
 		{
+			Debug.Log(hit.collider.name);
+
 			if (currentResource != hit.collider.gameObject)
 			{
 				if (currentResource != null)
@@ -105,18 +105,18 @@ public class Player : MonoBehaviour
 
 		if (isInSpaceship)
 		{
-			currentOxygen += 10f * Time.deltaTime;
+			currentOxygen += 8f * Time.deltaTime;
 		}
 		else
 		{
-			currentOxygen -= 2f * Time.deltaTime;
+			currentOxygen -= 0.5f * Time.deltaTime;
 		}
 		currentOxygen = Mathf.Clamp(currentOxygen, 0, maxOxygen);
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.CompareTag("Spaceship"))
+		if (other.gameObject.CompareTag("SpaceshipHitbox"))
 		{
 			isInSpaceship = true;
 		}
@@ -124,7 +124,7 @@ public class Player : MonoBehaviour
 
 	private void OnTriggerExit(Collider other)
 	{
-		if (other.gameObject.CompareTag("Spaceship"))
+		if (other.gameObject.CompareTag("SpaceshipHitbox"))
 		{
 			isInSpaceship = false;
 		}

@@ -9,11 +9,12 @@ public class CanvasTowardPlayer : MonoBehaviour
 	{
 		player = GameObject.FindGameObjectWithTag("Player");
 
-		// 만약 인스펙터에서 worldCanvas를 깜빡하고 할당 안 했다면 자동으로 가져오기
 		if (worldCanvas == null)
 		{
 			worldCanvas = GetComponent<Canvas>();
 		}
+
+		worldCanvas.gameObject.SetActive(false);
 	}
 
 	private void Update()

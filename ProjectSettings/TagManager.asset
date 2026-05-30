@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Spaceship
   - Resource
+  - Actors
+  - TrackingObject
+  - SpaceshipHitbox
   layers:
   - Default
   - TransparentFX

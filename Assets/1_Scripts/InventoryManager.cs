@@ -59,7 +59,7 @@ public class InventoryManager : MonoBehaviour
             {
                 AddItem(type, 1);
             }
-            Debug.Log("�����۴� �߰���");
+            Debug.Log("아이템을 획득하였습니다.");
         }
     }
 
@@ -123,6 +123,6 @@ public class InventoryManager : MonoBehaviour
                 return item.itemInfo;
             }
         }
-        return "������ ���� ����";
+        return "아이템 정보 없음";
     }
 }

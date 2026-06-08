@@ -16,6 +16,10 @@ public enum ItemType
     PlasticLv3,
     CoreLv1,
     CoreLv2,
+    item1,
+    item2,
+    item3,
+    item4,
 }
 
 [System.Serializable]
@@ -37,6 +41,7 @@ public class InventoryManager : MonoBehaviour
     public List<InventoryItem> inventoryItems = new List<InventoryItem>();
 
     public CraftSystem craftSystem;
+    public CraftSystemItem craftSystemItem;
 
     private void Awake()
     {

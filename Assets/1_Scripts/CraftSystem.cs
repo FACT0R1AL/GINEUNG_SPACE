@@ -36,10 +36,10 @@ public class CraftSystem : MonoBehaviour
 		ingredientsCountText.text = InventoryManager.Instance.GetItemCount(currentItemType).ToString();
 		resultCountText.text = InventoryManager.Instance.GetItemCount(upgradeItemType).ToString();
         currentItemInfoText.text =
-            $"???? ?????? ????\n\n" +
+            $"현재 아이템 정보\n\n" +
             $"{InventoryManager.Instance.GetItemInfo(currentItemType)}";
         upgradeItemInfoText.text =
-            "?????????? ?????? ????\n\n" + 
+            $"업그레이드 아이템 정보\n\n" + 
             $"{InventoryManager.Instance.GetItemInfo(upgradeItemType)}";
     }
 

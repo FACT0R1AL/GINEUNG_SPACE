@@ -136,9 +136,9 @@ public class CraftSystemItem : MonoBehaviour
             var itemShowParticleUI = particle.GetComponent<ItemShowParticleUI>();
             itemShowParticleUI.ShowItem(new InventoryItem
             {
-                itemType = upgradeItemType,
-                icon = InventoryManager.Instance.GetItemIcon(upgradeItemType),
-                color = InventoryManager.Instance.GetItemColor(upgradeItemType)
+                itemType = currentRecipe.upgradeItemType,
+                icon = InventoryManager.Instance.GetItemIcon(currentRecipe.upgradeItemType),
+                color = InventoryManager.Instance.GetItemColor(currentRecipe.upgradeItemType)
             });
             Destroy(particle, 2f);
         }

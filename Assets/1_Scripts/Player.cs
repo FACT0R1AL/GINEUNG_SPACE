@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
 
 	private LineRenderer lineRenderer;
 
+	private Rigidbody rb;
+
 	private void Start()
 	{
 		currentOxygen = maxOxygen;
@@ -32,11 +34,12 @@ public class Player : MonoBehaviour
 		Spaceship = GameObject.FindGameObjectWithTag("Spaceship");
 
 		lineRenderer = GetComponent<LineRenderer>();
+		rb = GetComponent<Rigidbody>();
 	}
 
 	private void Update()
 	{
-		// ÀÌµ¿
+		// ï¿½Ìµï¿½
 		float h = Input.GetAxis("Horizontal");
 		float v = Input.GetAxis("Vertical");
 
@@ -62,7 +65,7 @@ public class Player : MonoBehaviour
 		transform.Translate(currentVelocity * Time.deltaTime, Space.World);
 
 
-		// ÃÖ´ë °Å¸®
+		// ï¿½Ö´ï¿½ ï¿½Å¸ï¿½
 		float distance = Vector3.Distance(transform.position, Spaceship.transform.position);
 
 		if (distance > maxDistance)
@@ -71,7 +74,7 @@ public class Player : MonoBehaviour
 			currentVelocity = Vector3.zero;
 		}
 
-		// ÀÚ¿ø¸Ô±â
+		// ï¿½Ú¿ï¿½ï¿½Ô±ï¿½
 		Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
 		RaycastHit hit;
 
@@ -97,7 +100,7 @@ public class Player : MonoBehaviour
 			}
 		}
 
-		// »ê¼Ò
+		// ï¿½ï¿½ï¿½
 		if (Input.GetKeyDown(KeyCode.F1))
 		{
 			currentOxygen = maxOxygen;
@@ -112,7 +115,29 @@ public class Player : MonoBehaviour
 			currentOxygen -= 0.5f * Time.deltaTime;
 		}
 		currentOxygen = Mathf.Clamp(currentOxygen, 0, maxOxygen);
+
+		if (isInSpaceship)
+		{
+			if (Input.GetKeyDown(KeyCode.F))
+			{
+				if (!GameManager.instance.inSpaceShipUI.activeSelf)
+				{
+					GameManager.instance.inSpaceShipUI.SetActive(true);
+					currentVelocity = Vector3.zero;
+					rb.isKinematic = true;
+					transform.parent = Spaceship.transform;
+				}
+				else
+				{
+					GameManager.instance.inSpaceShipUI.SetActive(false);
+					rb.isKinematic = false;
+					transform.parent = null;
+				}
+			}
+		}
 	}
+
+	
 
 	private void OnTriggerEnter(Collider other)
 	{

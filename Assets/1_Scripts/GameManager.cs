@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
 	public GameObject inventoryUI;
 	public MessageUI messageUI;
+	public GameObject inSpaceShipUI;
 	public SpriteInfo[] spriteInfos;
 
 
@@ -27,6 +28,11 @@ public class GameManager : MonoBehaviour
 		{
 			Destroy(gameObject);
 		}
+	}
+
+	private void Start()
+	{
+		inSpaceShipUI.SetActive(false);
 	}
 
 	private void Update()

@@ -37,17 +37,17 @@ public class GameManager : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Alpha1))
-		{
-			if (inventoryUI.activeSelf == false)
-			{
-				inventoryUI.SetActive(true);
-			}
-			else
-			{
-				inventoryUI.SetActive(false);
-			}
-		}
+		// if (Input.GetKeyDown(KeyCode.Alpha1))
+		// {
+		// 	if (inventoryUI.activeSelf == false)
+		// 	{
+		// 		inventoryUI.SetActive(true);
+		// 	}
+		// 	else
+		// 	{
+		// 		inventoryUI.SetActive(false);
+		// 	}
+		// }
 	}
 
 	public Sprite GetSprite(ItemType itemType)

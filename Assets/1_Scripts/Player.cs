@@ -18,13 +18,13 @@ public class Player : MonoBehaviour
 	private Camera mainCamera;
 
 	private GameObject Spaceship;
-	private bool isInSpaceship;
+	public bool isInSpaceship;
 
 	private GameObject currentResource;
 
 	private LineRenderer lineRenderer;
 
-	private Rigidbody rb;
+	public Rigidbody rb;
 
 	private void Start()
 	{

@@ -1,19 +1,19 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Splines;
-using Unity.Mathematics; // Spline API »ç¿ëÀ» À§ÇØ ÇÊ¿äÇÕ´Ï´Ù.
+using Unity.Mathematics; // Spline API ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Õ´Ï´ï¿½.
 
 public class SpaceShip : MonoBehaviour
 {
 	[Header("Move")]
-	public SplineContainer spline; // GameObject ´ë½Å SplineContainer·Î º¯°æ
+	public SplineContainer spline; // GameObject ï¿½ï¿½ï¿½ SplineContainerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public float currentMoveSpeed;
 	public float maxMoveSpeed = 4f;
 
 	[Header("Hitbox")]
 	public GameObject spaceshipHitbox;
 
-	private float distancePercentage = 0f; // 0(½ÃÀÛÁ¡) ~ 1(³¡Á¡) »çÀÌÀÇ ÁøÇàµµ
+	private float distancePercentage = 0f; // 0(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½) ~ 1(ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½àµµ
 	private float splineLength;
 
 	private void Start()
@@ -22,7 +22,7 @@ public class SpaceShip : MonoBehaviour
 
 		if (spline != null)
 		{
-			// ½ºÇÃ¶óÀÎÀÇ ÀüÃ¼ ±æÀÌ¸¦ ±¸ÇÕ´Ï´Ù.
+			// ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
 			splineLength = spline.CalculateLength(0);
 		}
 	}
@@ -31,42 +31,41 @@ public class SpaceShip : MonoBehaviour
 	{
 		if (spline == null || splineLength <= 0) return;
 
-		// 1. ¼Óµµ °¨¼Ò ¹× Å¬·¥ÇÁ (±âÁ¸ ·ÎÁ÷ À¯Áö)
+		// 1. ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 		if (Input.GetKeyDown(KeyCode.F1))
 		{
 			currentMoveSpeed = maxMoveSpeed;
 		}
-		currentMoveSpeed -= 0.02f * Time.deltaTime; // ¿øÇÏ´Â ¼Óµµ·Î Á¶ÀýÇÏ¼¼¿ä. 
-		currentMoveSpeed = Mathf.Clamp(currentMoveSpeed, 1f, maxMoveSpeed);
+		currentMoveSpeed -= 0.02f * Time.deltaTime; // ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Óµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½. 
+		currentMoveSpeed = Mathf.Lerp(currentMoveSpeed, maxMoveSpeed, 0.5f * Time.deltaTime); 
 
-		// 2. ÇöÀç ¼Óµµ¸¦ ¹ÙÅÁÀ¸·Î ÁøÇàµµ(Percentage)¸¦ ´©Àû °è»êÇÕ´Ï´Ù.
-		// (ÀÌµ¿°Å¸® = ¼Óµµ * ½Ã°£)À» ÀüÃ¼ ±æÀÌ·Î ³ª´©¾î 0~1 »çÀÌÀÇ ºñÀ²·Î ¸¸µì´Ï´Ù.
 		distancePercentage += (currentMoveSpeed * Time.deltaTime) / splineLength;
 
-		// 3. °è»êµÈ ÁøÇàµµ¸¦ ¹ÙÅÁÀ¸·Î À§Ä¡¿Í È¸Àü°ªÀ» °¡Á®¿Í ¿ìÁÖ¼±¿¡ Àû¿ëÇÕ´Ï´Ù.
+		// 3. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½àµµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
 		EvaluateSplinePosition(distancePercentage);
 	}
 
 	private void EvaluateSplinePosition(float t)
 	{
-		// ½ºÇÃ¶óÀÎ »óÀÇ À§Ä¡(Position)¿Í ÁøÇà ¹æÇâ(Tangent)À» °è»êÇÕ´Ï´Ù.
+		// ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡(Position)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(Tangent)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
 		float3 position;
 		float3 tangent;
 		float3 upVector;
 
 		spline.Evaluate(0, t, out position, out tangent, out upVector);
 
-		// ·ÎÄÃ ÁÂÇ¥¸¦ ¿ùµå ÁÂÇ¥·Î º¯È¯ÇÏ¿© Àû¿ëÇÕ´Ï´Ù.
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
 		transform.position = spline.transform.TransformPoint(position);
 
-		// ¹æÇâ(Rotation) ¼³Á¤ (Spline AnimateÀÇ Object Y+ Forward, Object Z+ Up Ãà Á¤·Ä ±âÁØ)
+		// ï¿½ï¿½ï¿½ï¿½(Rotation) ï¿½ï¿½ï¿½ï¿½ (Spline Animateï¿½ï¿½ Object Y+ Forward, Object Z+ Up ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 		if (!tangent.Equals(float3.zero))
 		{
-			// ForwardAxis°¡ Y+¿´À¸¹Ç·Î, ÅºÁ¨Æ®(ÁøÇà¹æÇâ)¸¦ YÃàÀ¸·Î ¼³Á¤ÇÕ´Ï´Ù.
+			// ForwardAxisï¿½ï¿½ Y+ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½, Åºï¿½ï¿½Æ®(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ Yï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
 			Quaternion targetRotation = Quaternion.LookRotation(tangent, upVector);
-			// ÇÊ¿ä¿¡ µû¶ó Ãà È¸Àü º¸Á¤ÀÌ ÇÊ¿äÇÒ ¼ö ÀÖ½À´Ï´Ù. 
-			// ±âº» ¹æÇâÀÌ ¾È ¸ÂÀ¸¸é ¾Æ·¡ Ãà Á¤·ÄÀ» È°¼ºÈ­ÇØº¸¼¼¿ä.
+			// ï¿½Ê¿ä¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½. 
+			// ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­ï¿½Øºï¿½ï¿½ï¿½ï¿½ï¿½.
 			transform.rotation = spline.transform.rotation * targetRotation * Quaternion.Euler(90, 0, 0);
 		}
 	}
+
 }

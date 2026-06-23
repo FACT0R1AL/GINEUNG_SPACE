@@ -69,7 +69,7 @@ public class SystemUI : MonoBehaviour
         nameAndLevelText.text = $"{SystemManager.Instance.systems[systemIndex].systemName} Lv.{SystemManager.Instance.systems[systemIndex].currentLevel}";
         currentDesc.text = $"{SystemManager.Instance.systems[systemIndex].upgradeInfos[SystemManager.Instance.systems[systemIndex].currentLevel - 1].upgradeDesc}";
         int max = 3;
-        if (SystemManager.Instance.systems[systemIndex].systemName == "√§¡˝∑Œ∫ø")
+        if (SystemManager.Instance.systems[systemIndex].systemName == "√§ÔøΩÔøΩÔøΩŒ∫ÔøΩ")
         {
             max = 4;
         }
@@ -83,44 +83,44 @@ public class SystemUI : MonoBehaviour
                 switch (itemData.itemType)
                 {
                     case ItemType.IronLv1:
-                        itemName = "√∂ Lv.1";
+                        itemName = "Ï≤† Lv.1";
                         break;
                     case ItemType.IronLv2:
-                        itemName = "√∂ Lv.2";
+                        itemName = "Ï≤† Lv.2";
                         break;
                     case ItemType.IronLv3:
-                        itemName = "√∂ Lv.3";
+                        itemName = "Ï≤† Lv.3";
                         break;
                     case ItemType.CopperLv1:
-                        itemName = "±∏∏Æ Lv.1";
+                        itemName = "Íµ¨Î¶¨ Lv.1";
                         break;
                     case ItemType.CopperLv2:
-                        itemName = "±∏∏Æ Lv.2";
+                        itemName = "Íµ¨Î¶¨ Lv.2";
                         break;
                     case ItemType.CopperLv3:
-                        itemName = "±∏∏Æ Lv.3";
+                        itemName = "Íµ¨Î¶¨ Lv.3";
                         break;
                     case ItemType.PlasticLv1:
-                        itemName = "«√∂ÛΩ∫∆Ω Lv.1";
+                        itemName = "ÌîåÎùºÏä§Ìã± Lv.1";
                         break;
                     case ItemType.PlasticLv2:
-                        itemName = "«√∂ÛΩ∫∆Ω Lv.2";
+                        itemName = "ÌîåÎùºÏä§Ìã± Lv.2";
                         break;
                     case ItemType.PlasticLv3:
-                        itemName = "«√∂ÛΩ∫∆Ω Lv.3";
+                        itemName = "ÌîåÎùºÏä§Ìã± Lv.3";
                         break;
                 }
                 upgradeItemsDesc.text += $"{itemName} ({itemData.count})\n";
             }
             upgradeButton.interactable = true;
-            upgradeButtonText.text = "æ˜±◊∑π¿ÃµÂ";
+            upgradeButtonText.text = "ÔøΩÔøΩÔøΩ◊∑ÔøΩÔøΩÃµÔøΩ";
         }
         else
         {
             upgradeItemsDesc.text = "";
-            upgradeDesc.text = "√÷¥Î ∑π∫ß¿‘¥œ¥Ÿ";
+            upgradeDesc.text = "ÔøΩ÷¥ÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩ‘¥œ¥ÔøΩ";
             upgradeButton.interactable = false;
-            upgradeButtonText.text = "√÷¥Î ∑π∫ß";
+            upgradeButtonText.text = "ÔøΩ÷¥ÔøΩ ÔøΩÔøΩÔøΩÔøΩ";
         }
 
         for (int i = 0; i < stars.Length; i++)

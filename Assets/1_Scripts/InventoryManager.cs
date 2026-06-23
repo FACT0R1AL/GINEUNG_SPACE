@@ -27,6 +27,7 @@ public struct InventoryItem
 {
     public ItemType itemType;
     public int count;
+    public float weight;
     public Sprite icon;
     public Color color;
     [TextArea]
@@ -42,6 +43,8 @@ public class InventoryManager : MonoBehaviour
 
     public CraftSystem craftSystem;
     public CraftSystemItem craftSystemItem;
+
+    public float maxWeight = 100f;
 
     private void Awake()
     {

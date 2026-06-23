@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
 	public GameObject inventoryUI;
 	public MessageUI messageUI;
+	public GameObject inGameUI;
 	public GameObject inSpaceShipUI;
 	public SpriteInfo[] spriteInfos;
 

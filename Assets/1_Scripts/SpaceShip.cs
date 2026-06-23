@@ -16,6 +16,8 @@ public class SpaceShip : MonoBehaviour
 	private float distancePercentage = 0f; // 0(������) ~ 1(����) ������ ���൵
 	private float splineLength;
 
+	public BoosterSystem boosterSystem;
+
 	private void Start()
 	{
 		currentMoveSpeed = maxMoveSpeed;
@@ -32,12 +34,15 @@ public class SpaceShip : MonoBehaviour
 		if (spline == null || splineLength <= 0) return;
 
 		// 1. �ӵ� ���� �� Ŭ���� (���� ���� ����)
-		if (Input.GetKeyDown(KeyCode.F1))
+		if (boosterSystem != null && boosterSystem.useBooster)
 		{
-			currentMoveSpeed = maxMoveSpeed;
+			currentMoveSpeed += boosterSystem.boosterForce * Time.deltaTime * 0.1f;
 		}
-		currentMoveSpeed -= 0.02f * Time.deltaTime; // ���ϴ� �ӵ��� �����ϼ���. 
-		currentMoveSpeed = Mathf.Lerp(currentMoveSpeed, maxMoveSpeed, 0.5f * Time.deltaTime); 
+		else
+		{
+			currentMoveSpeed -= 0.02f * Time.deltaTime; // ϴ ӵ ϼ.
+		}
+		currentMoveSpeed = Mathf.Lerp(currentMoveSpeed, maxMoveSpeed, 0.5f * Time.deltaTime);
 
 		distancePercentage += (currentMoveSpeed * Time.deltaTime) / splineLength;
 

@@ -130,6 +130,7 @@ public class Player : MonoBehaviour
 				else
 				{
 					GameManager.instance.inSpaceShipUI.SetActive(false);
+					GameManager.instance.inGameUI.SetActive(true);
 					rb.isKinematic = false;
 					transform.parent = null;
 				}

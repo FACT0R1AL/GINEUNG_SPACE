@@ -17,6 +17,10 @@ public class GameManager : MonoBehaviour
 	public GameObject inGameUI;
 	public GameObject inSpaceShipUI;
 	public SpriteInfo[] spriteInfos;
+	public SpaceShip spaceShip;
+
+	public bool flashlightEventActive = false;
+	public bool elctriErrorEventActive = false;
 
 
     private void Awake()

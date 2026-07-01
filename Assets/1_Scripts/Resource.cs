@@ -17,6 +17,11 @@ public class Resource : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
         {
+            if (InventoryManager.Instance.GetCurrentWeight() >= InventoryManager.Instance.maxWeight)
+            {
+                GameManager.instance.messageUI.SendMessage("인벤토리 무게가 가득 찼습니다.", Color.red);
+                return;
+            }
             InventoryManager.Instance.AddItem(itemType, count);
             switch (itemType)
             {

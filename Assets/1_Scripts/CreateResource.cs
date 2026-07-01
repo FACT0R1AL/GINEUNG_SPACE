@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class CreateResource : MonoBehaviour
 {
@@ -125,6 +126,43 @@ public class CreateResource : MonoBehaviour
         return true;
     }
 
+    private bool SpawnOne(ItemType itemType)
+    {
+        if (resourcePrefabEntries.Length == 0) return false;
+
+        
+
+        int typeIndex = resourcePrefabEntries.ToList().FindIndex(entry => entry.itemType == itemType);
+
+        if (!pools.ContainsKey(typeIndex) || pools[typeIndex].Count == 0)
+        {
+            GameObject extra = Instantiate(resourcePrefabEntries[typeIndex].prefab, poolRoot);
+            extra.SetActive(false);
+            pools[typeIndex].Enqueue(extra);
+        }
+
+        Vector3 spawnPos = GetRandomSpawnPosition();
+        if (spawnPos == Vector3.zero) return false;
+
+        GameObject obj = pools[typeIndex].Dequeue();
+        obj.transform.position = spawnPos;
+        obj.transform.rotation = Random.rotation;
+        obj.SetActive(true);
+
+        var res = obj.GetComponent<Resource>();
+        if (res != null)
+        {
+            var entry = resourcePrefabEntries[typeIndex];
+            res.itemType = entry.itemType;
+            res.count = Random.Range(entry.minCount, entry.maxCount + 1);
+            res.poolTypeIndex = typeIndex;
+            res.ResourceUI.SetActive(false);
+        }
+
+        activeResources.Add(obj);
+        return true;
+    }
+
     private Vector3 GetRandomSpawnPosition()
     {
         if (spaceship == null) return Vector3.zero;
@@ -176,6 +214,23 @@ public class CreateResource : MonoBehaviour
     private void TeleportToFront(GameObject obj)
     {
         Vector3 newPos = GetRandomSpawnPosition();
+        if (GameManager.instance.flashlightEventActive)
+        {
+            ReturnToPoolDelayed(obj);
+            int randomIndex = Random.Range(0, 4);
+            switch (randomIndex)
+            {
+                case 0:
+                    SpawnOne(ItemType.IronLv1);
+                    break;
+                case 1:
+                    SpawnOne(ItemType.CopperLv1);
+                    break;
+                case 2:
+                    SpawnOne(ItemType.PlasticLv1);
+                    break;
+            }
+        }
         if (newPos == Vector3.zero) return;
         obj.transform.position = newPos;
         obj.transform.rotation = Random.rotation;

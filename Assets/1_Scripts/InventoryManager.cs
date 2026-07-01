@@ -46,6 +46,8 @@ public class InventoryManager : MonoBehaviour
 
     public float maxWeight = 100f;
 
+    
+
     private void Awake()
     {
         if (Instance == null)
@@ -132,5 +134,15 @@ public class InventoryManager : MonoBehaviour
             }
         }
         return "아이템 정보 없음";
+    }
+
+    public float GetCurrentWeight()
+    {
+        float currentWeight = 0f;
+        foreach (InventoryItem item in inventoryItems)
+        {
+            currentWeight += item.weight * item.count;
+        }
+        return currentWeight;
     }
 }

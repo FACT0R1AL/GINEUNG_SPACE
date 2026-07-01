@@ -11,6 +11,7 @@ public class ItemSkillManager : MonoBehaviour
 
     void Update()
     {
+        
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             WarpItem();
@@ -23,6 +24,11 @@ public class ItemSkillManager : MonoBehaviour
 
     public void WarpItem()
     {
+        if (GameManager.instance.elctriErrorEventActive)
+        {
+            GameManager.instance.SendMessage("전파 통신 오류로 인한 아이템 사용불가", Color.yellow);
+            return;
+        }
         player.transform.position = spaceShip.transform.position + Random.onUnitSphere * 5f;
         player.transform.parent = spaceShip.transform;
         player.isInSpaceship = true;
@@ -33,7 +39,11 @@ public class ItemSkillManager : MonoBehaviour
 
     public void SpaceSpeedUp()
     {
-
+        if (GameManager.instance.elctriErrorEventActive)
+        {
+            GameManager.instance.SendMessage("전파 통신 오류로 인한 아이템 사용불가", Color.yellow);
+            return;
+        }
         if (spaceSpeed != null)
         {
             StopCoroutine(spaceSpeed);

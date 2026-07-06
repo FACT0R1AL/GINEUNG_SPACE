@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
 	public bool flashlightEventActive = false;
 	public bool elctriErrorEventActive = false;
+	public bool gasExplosionEventActive = false;
 
 
     private void Awake()

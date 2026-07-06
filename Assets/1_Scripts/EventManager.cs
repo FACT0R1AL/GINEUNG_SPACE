@@ -1,7 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
 
 public enum EventType
 {
@@ -25,6 +23,10 @@ public class EventManager : MonoBehaviour
     public EventType currentEvent = EventType.none;
     public EventData[] eventData = new EventData[3];
     public float cooldownDuration = 20f;
+
+    [Header("Asteroid Event Settings")]
+    public GameObject asteroidPrefab;
+    public float asteroidSpawnDistance = 100f;
 
     private bool onCooldown = false;
 
@@ -91,45 +93,33 @@ public class EventManager : MonoBehaviour
         float defaultSpeed = GameManager.instance.spaceShip.maxMoveSpeed;
         GameManager.instance.flashlightEventActive = true;
         GameManager.instance.spaceShip.maxMoveSpeed /= 2f;
+        CreateResource.Instance.SpawnStormResources();
         yield return new WaitForSeconds(15f);
         GameManager.instance.flashlightEventActive = false;
         GameManager.instance.spaceShip.maxMoveSpeed = defaultSpeed;
         EndEvent();
     }
 
-    struct Message
-        {
-            public string text;
-            public Text textComponent;
-        }
-
     IEnumerator ElctriErrorEvent()
     {
         GameManager.instance.SendMessage("전파 통신 오류 이벤트 발생", Color.yellow);
-        List<Message> messages = new List<Message>();
-        foreach (var Text in FindObjectsByType<Text>(FindObjectsInactive.Include, FindObjectsSortMode.None))
-        {
-            messages.Add(new Message { text = Text.text, textComponent = Text });
-            Text.text = "error";
-        };
         GameManager.instance.elctriErrorEventActive = true;
         yield return new WaitForSeconds(8f);
         GameManager.instance.elctriErrorEventActive = false;
-        for(int i = 0; i < messages.Count; i++)
-        {
-            if (messages[i].textComponent != null)
-            {
-                messages[i].textComponent.text = messages[i].text;
-            }
-        }
         EndEvent();
     }
 
     private void stoneHitEvent()
     {
         GameManager.instance.SendMessage("소행성 충돌 이벤트 발생", Color.yellow);
-        FixManager.Instance.broken(FixType.Engine);
-        FixManager.Instance.broken(FixType.Wall);
+
+        if (asteroidPrefab != null && GameManager.instance.spaceShip != null)
+        {
+            Vector3 spawnPos = GameManager.instance.spaceShip.transform.position
+                + Random.onUnitSphere * asteroidSpawnDistance;
+            Instantiate(asteroidPrefab, spawnPos, Quaternion.identity);
+        }
+
         EndEvent();
     }
 

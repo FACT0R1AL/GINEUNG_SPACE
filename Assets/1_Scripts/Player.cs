@@ -129,10 +129,17 @@ public class Player : MonoBehaviour
 				}
 				else
 				{
-					GameManager.instance.inSpaceShipUI.SetActive(false);
-					GameManager.instance.inGameUI.SetActive(true);
-					rb.isKinematic = false;
-					transform.parent = null;
+					if (GameManager.instance.gasExplosionEventActive)
+					{
+						GameManager.instance.SendMessage("가스 폭발 지역에서는 하선할 수 없습니다", Color.yellow);
+					}
+					else
+					{
+						GameManager.instance.inSpaceShipUI.SetActive(false);
+						GameManager.instance.inGameUI.SetActive(true);
+						rb.isKinematic = false;
+						transform.parent = null;
+					}
 				}
 			}
 		}

@@ -35,18 +35,6 @@ public class UIManager : MonoBehaviour
 		float path = spaceshipPathLength - passedPathLength;
 		path = Mathf.Clamp(path, 0, spaceshipPathLength);
 
-		remainingDistanceText.text = $"{(path * 1000f).ToString("#,##0")}km ³²À½";
-
-		spaceshipVelocityText.text = $"{Mathf.Round(spaceship.GetComponent<SpaceShip>().currentMoveSpeed * 1000f)}km/s";
-		spaceshipVelocityImage.fillAmount = (spaceship.GetComponent<SpaceShip>().currentMoveSpeed * 1000f) / (spaceship.GetComponent<SpaceShip>().maxMoveSpeed * 1000f);
-
-		oxygenTankImage.fillAmount = player.GetComponent<Player>().currentOxygen / player.GetComponent<Player>().maxOxygen;
-		oxygenTankText.text = $"{Mathf.Round((player.GetComponent<Player>().currentOxygen / player.GetComponent<Player>().maxOxygen) * 100f)}%";
-		oxygenTankText.GetComponent<RectTransform>().localPosition =
-			new Vector3(oxygenTankText.GetComponent<RectTransform>().localPosition.x,
-						170f * oxygenTankImage.fillAmount - 60f,
-						oxygenTankText.GetComponent<RectTransform>().localPosition.z);
-
 		float remainingTime = 0f;
 		float currentSpeed = spaceship.GetComponent<SpaceShip>().currentMoveSpeed;
 
@@ -55,13 +43,41 @@ public class UIManager : MonoBehaviour
 			remainingTime = path / currentSpeed;
 		}
 
-		// ¿¹¿Ü Ã³¸® (½Ã°£ÀÌ À½¼ö°¡ µÇ°Å³ª ¸ÔÅëÀÌ µÇ´Â Çö»ó ¹æÁö)
+		// ì˜ˆì™¸ ì²˜ë¦¬ (ì‹œê°„ì´ ìŒìˆ˜ê°€ ë˜ê±°ë‚˜ ë¬´í•œëŒ€ ë˜ëŠ” ê²ƒì„ ë°©ì§€)
 		if (float.IsNaN(remainingTime) || remainingTime < 0) remainingTime = 0f;
 
-		// 2. TimeSpan ±¸Á¶Ã¼¸¦ ÀÌ¿ëÇØ ½Ã:ºĞ:ÃÊ Çü½ÄÀ¸·Î ¿Ã¹Ù¸£°Ô º¯È¯
+		if (GameManager.instance.elctriErrorEventActive)
+		{
+			ShowGlitchedStats();
+			return;
+		}
+
+		remainingDistanceText.text = $"{(path * 1000f).ToString("#,##0")}km ë‚¨ìŒ";
+
+		spaceshipVelocityText.text = $"{Mathf.Round(currentSpeed * 1000f)}km/s";
+		spaceshipVelocityImage.fillAmount = (currentSpeed * 1000f) / (spaceship.GetComponent<SpaceShip>().maxMoveSpeed * 1000f);
+
+		oxygenTankImage.fillAmount = player.GetComponent<Player>().currentOxygen / player.GetComponent<Player>().maxOxygen;
+		oxygenTankText.text = $"{Mathf.Round((player.GetComponent<Player>().currentOxygen / player.GetComponent<Player>().maxOxygen) * 100f)}%";
+		oxygenTankText.GetComponent<RectTransform>().localPosition =
+			new Vector3(oxygenTankText.GetComponent<RectTransform>().localPosition.x,
+						170f * oxygenTankImage.fillAmount - 60f,
+						oxygenTankText.GetComponent<RectTransform>().localPosition.z);
+
+		// TimeSpan êµ¬ì¡°ì²´ë¥¼ ì´ìš©í•´ ë¶„:ì´ˆ:ë°€ë¦¬ì´ˆ í˜•ì‹ìœ¼ë¡œ ë³€í™˜
 		System.TimeSpan timeSpan = System.TimeSpan.FromSeconds(remainingTime);
 
-		// 3. UI ÅØ½ºÆ®¿¡ ¹İ¿µ (60ÃÊ°¡ ³ÑÀ¸¸é ºĞÀ¸·Î, 60ºĞÀÌ ³ÑÀ¸¸é ½Ã°£À¸·Î Á¤»ó Ãâ·Â)
+		// UI í…ìŠ¤íŠ¸ì— ë°˜ì˜ (60ì´ˆê°€ ë„˜ìœ¼ë©´ ë¶„ë‹¨ìœ„, 60ë¶„ì´ ë„˜ìœ¼ë©´ ì‹œê°„ë‹¨ìœ„ ë“±ì˜ ê³ ë ¤ ì—†ìŒ)
 		timerText.text = string.Format("{0:00}:{1:00}.{2:00}", (int)timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds);
+	}
+
+	private void ShowGlitchedStats()
+	{
+		remainingDistanceText.text = $"{Random.Range(0, Mathf.RoundToInt(spaceshipPathLength * 1000f)).ToString("#,##0")}km ë‚¨ìŒ";
+		spaceshipVelocityText.text = $"{Random.Range(0, 999)}km/s";
+		spaceshipVelocityImage.fillAmount = Random.Range(0f, 1f);
+		oxygenTankImage.fillAmount = Random.Range(0f, 1f);
+		oxygenTankText.text = $"{Random.Range(0, 100)}%";
+		timerText.text = string.Format("{0:00}:{1:00}.{2:00}", Random.Range(0, 60), Random.Range(0, 60), Random.Range(0, 100));
 	}
 }

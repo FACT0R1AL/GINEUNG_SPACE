@@ -21,8 +21,13 @@ public class CreateResource : MonoBehaviour
     [Tooltip("옆/앞 방향으로 이 거리 이상이면 회수")]
     public float sideDespawnDistance = 200f;
 
+    [Header("Solar Storm Event Settings")]
+    public int stormResourceCount = 8;
+    public float stormResourceLifetime = 20f;
+
     private Dictionary<int, Queue<GameObject>> pools = new Dictionary<int, Queue<GameObject>>();
     private List<GameObject> activeResources = new List<GameObject>();
+    private List<GameObject> stormResources = new List<GameObject>();
 
     private GameObject spaceship;
     private SpaceShip spaceshipComp;
@@ -126,13 +131,22 @@ public class CreateResource : MonoBehaviour
         return true;
     }
 
-    private bool SpawnOne(ItemType itemType)
+    private bool SpawnOne(ItemType itemType, out GameObject spawnedObj)
     {
+        spawnedObj = null;
+        Vector3 spawnPos = GetRandomSpawnPosition();
+        if (spawnPos == Vector3.zero) return false;
+
+        return SpawnOneAt(itemType, spawnPos, out spawnedObj);
+    }
+
+    private bool SpawnOneAt(ItemType itemType, Vector3 position, out GameObject spawnedObj)
+    {
+        spawnedObj = null;
         if (resourcePrefabEntries.Length == 0) return false;
 
-        
-
         int typeIndex = resourcePrefabEntries.ToList().FindIndex(entry => entry.itemType == itemType);
+        if (typeIndex < 0) return false;
 
         if (!pools.ContainsKey(typeIndex) || pools[typeIndex].Count == 0)
         {
@@ -141,11 +155,8 @@ public class CreateResource : MonoBehaviour
             pools[typeIndex].Enqueue(extra);
         }
 
-        Vector3 spawnPos = GetRandomSpawnPosition();
-        if (spawnPos == Vector3.zero) return false;
-
         GameObject obj = pools[typeIndex].Dequeue();
-        obj.transform.position = spawnPos;
+        obj.transform.position = position;
         obj.transform.rotation = Random.rotation;
         obj.SetActive(true);
 
@@ -160,7 +171,54 @@ public class CreateResource : MonoBehaviour
         }
 
         activeResources.Add(obj);
+        spawnedObj = obj;
         return true;
+    }
+
+    private static readonly ItemType[] StormLv1Types = { ItemType.IronLv1, ItemType.CopperLv1, ItemType.PlasticLv1 };
+    private static readonly ItemType[] DebrisTypes =
+    {
+        ItemType.IronLv1, ItemType.IronLv2,
+        ItemType.CopperLv1, ItemType.CopperLv2,
+        ItemType.PlasticLv1, ItemType.PlasticLv2
+    };
+
+    public void SpawnStormResources()
+    {
+        for (int i = 0; i < stormResourceCount; i++)
+        {
+            ItemType type = StormLv1Types[Random.Range(0, StormLv1Types.Length)];
+            if (SpawnOne(type, out GameObject obj))
+            {
+                stormResources.Add(obj);
+            }
+        }
+
+        StartCoroutine(ClearStormResourcesAfter(stormResourceLifetime));
+    }
+
+    public void SpawnDebris(Vector3 center, int count, float spreadRadius)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            ItemType type = DebrisTypes[Random.Range(0, DebrisTypes.Length)];
+            Vector3 pos = center + Random.insideUnitSphere * spreadRadius;
+            SpawnOneAt(type, pos, out _);
+        }
+    }
+
+    private IEnumerator ClearStormResourcesAfter(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        foreach (var obj in stormResources)
+        {
+            if (obj != null && obj.activeSelf)
+            {
+                ReturnToPool(obj);
+            }
+        }
+        stormResources.Clear();
     }
 
     private Vector3 GetRandomSpawnPosition()
@@ -214,23 +272,6 @@ public class CreateResource : MonoBehaviour
     private void TeleportToFront(GameObject obj)
     {
         Vector3 newPos = GetRandomSpawnPosition();
-        if (GameManager.instance.flashlightEventActive)
-        {
-            ReturnToPoolDelayed(obj);
-            int randomIndex = Random.Range(0, 4);
-            switch (randomIndex)
-            {
-                case 0:
-                    SpawnOne(ItemType.IronLv1);
-                    break;
-                case 1:
-                    SpawnOne(ItemType.CopperLv1);
-                    break;
-                case 2:
-                    SpawnOne(ItemType.PlasticLv1);
-                    break;
-            }
-        }
         if (newPos == Vector3.zero) return;
         obj.transform.position = newPos;
         obj.transform.rotation = Random.rotation;

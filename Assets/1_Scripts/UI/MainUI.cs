@@ -8,7 +8,7 @@ public class MainUI : MonoBehaviour
     
     public void GameStart()
     {
-        SceneManager.LoadScene("GameScene");
+        Loading.LoadingScene("GameScene");
     }
 
     public void OpenSettings()

@@ -24,13 +24,16 @@ public class EventManager : MonoBehaviour
 {
     public EventType currentEvent = EventType.none;
     public EventData[] eventData = new EventData[3];
+    public float cooldownDuration = 20f;
+
+    private bool onCooldown = false;
 
     IEnumerator Start()
     {
         while (true)
         {
             yield return new WaitForSeconds(1f);
-            if (currentEvent == EventType.none)
+            if (currentEvent == EventType.none && !onCooldown)
             {
                 CheckTime();
             }
@@ -91,7 +94,7 @@ public class EventManager : MonoBehaviour
         yield return new WaitForSeconds(15f);
         GameManager.instance.flashlightEventActive = false;
         GameManager.instance.spaceShip.maxMoveSpeed = defaultSpeed;
-        currentEvent = EventType.none;
+        EndEvent();
     }
 
     struct Message
@@ -119,7 +122,7 @@ public class EventManager : MonoBehaviour
                 messages[i].textComponent.text = messages[i].text;
             }
         }
-        currentEvent = EventType.none;
+        EndEvent();
     }
 
     private void stoneHitEvent()
@@ -127,9 +130,20 @@ public class EventManager : MonoBehaviour
         GameManager.instance.SendMessage("소행성 충돌 이벤트 발생", Color.yellow);
         FixManager.Instance.broken(FixType.Engine);
         FixManager.Instance.broken(FixType.Wall);
-        currentEvent = EventType.none;
+        EndEvent();
     }
 
-    
+    private void EndEvent()
+    {
+        currentEvent = EventType.none;
+        StartCoroutine(CooldownRoutine());
+    }
+
+    private IEnumerator CooldownRoutine()
+    {
+        onCooldown = true;
+        yield return new WaitForSeconds(cooldownDuration);
+        onCooldown = false;
+    }
 
 }
